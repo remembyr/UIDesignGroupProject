@@ -9,9 +9,11 @@ import {
   Button,
 } from "flowbite-react";
 import { useModal } from "../contexts/ModalContext";
+import { useNavigate } from "react-router-dom";
 
 export function SimpleNavbar() {
-  const { setModalOpen } = useModal();
+  const navigate = useNavigate();
+  // const { setModalOpen } = useModal();
 
   return (
     <Navbar fluid rounded>
@@ -26,7 +28,8 @@ export function SimpleNavbar() {
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
-        <Button onClick={() => setModalOpen(true)}>Get started</Button>
+        {/* <Button onClick={() => setModalOpen(true)}>Get started</Button> */}
+        <Button onClick={() => navigate("/learn")}>Get started</Button>
         <NavbarToggle />
       </div>
       <NavbarCollapse>
