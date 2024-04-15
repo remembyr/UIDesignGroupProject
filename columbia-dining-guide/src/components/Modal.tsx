@@ -1,15 +1,14 @@
 "use client";
 
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
+import { useModal } from "../contexts/ModalContext";
 
 export function MyModal() {
-  const [openModal, setOpenModal] = useState(false);
+  const { isModalOpen, setModalOpen } = useModal();
 
   return (
     <>
-      <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal dismissible show={isModalOpen} onClose={() => setModalOpen(false)}>
         <Modal.Header>Terms of Service</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
@@ -28,8 +27,8 @@ export function MyModal() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>I accept</Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
+          <Button onClick={() => setModalOpen(false)}>I accept</Button>
+          <Button color="gray" onClick={() => setModalOpen(false)}>
             Decline
           </Button>
         </Modal.Footer>
