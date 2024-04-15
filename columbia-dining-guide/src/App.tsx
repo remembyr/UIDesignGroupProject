@@ -8,14 +8,18 @@ import {
 
 import Home from "./components/Home";
 import MacroMenu from "./components/MacroMenu";
+import { SimpleNavbar } from "./components/SimpleNavbar";
 
 function App() {
   return (
+    <>
+                <SimpleNavbar />
                 <Routes>
                     <Route path="/" element={<Home />}/>
                     <Route path="/learn/macros" element={<MacroMenu />}/>
                     {/*Add other paths here */}
                 </Routes>
+    </>
   );
 }
 

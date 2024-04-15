@@ -11,7 +11,6 @@ function MacroMenu() {
 
   return (
     <>
-      <SimpleNavbar />
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <Card className="max-w-4xl">
             <h1 className="text-2xl dark:text-white">What are macronutrients?</h1>
