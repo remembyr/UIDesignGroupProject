@@ -17,7 +17,7 @@ export function SimpleNavbar() {
 
   return (
     <Navbar fluid rounded>
-      <NavbarBrand href="#">
+      <NavbarBrand href="/">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Fruit.svg"
           className="mr-3 h-6 sm:h-9"
