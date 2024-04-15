@@ -1,4 +1,5 @@
 import { DarkThemeToggle } from "flowbite-react";
+import { MyModal } from "./Modal";
 
 //slide 2
 
@@ -8,7 +9,7 @@ function Home() {
       <h1 className="text-2xl dark:text-white">
         Flowbite React + Create React App
       </h1>
-      <DarkThemeToggle />
+      <MyModal />
     </main>
   );
 }
