@@ -4,11 +4,29 @@ import { Card, Button } from "flowbite-react";
 import React, { useState } from "react";
 import { Pagination } from "flowbite-react";
 import MacroMenu from "./MacroMenu";
+import chart from '../images/macros/pie-chart.png'
 
 // Define placeholder content for each page
 const pageComponents = [
   <MacroMenu />,
-  <div>Explore more about our topics on page 2.</div>,
+  <div>
+    <h5 className="mb-6">
+      Let's put it all together with the 50-30-20 rule
+    </h5>
+    <div className="flex">
+      <div className="flex-col mr-3">
+        <img src={chart} alt="chart with 50% carbs, 30% protein, and 20% fat"/>
+      </div>
+      <div className="flex-col">
+        <p className="font-normal text-gray-700 dark:text-gray-400 mt-4">
+          The 50-30-20 rule is a dietary guideline suggesting that 50% of your calories should come from carbohydrates,
+          30% from proteins, and 20% from fats. This balance can help support sustained energy, optimal health,
+          and weight management.
+        </p>
+      </div>
+    </div>
+
+  </div>,
   <div>Detailed insights are provided on page 3.</div>,
   <div>Page 4 contains advanced content.</div>,
   <div>Review and summary on page 5.</div>,
@@ -32,9 +50,6 @@ export function Learn() {
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Learn Section
         </h5>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
-          Here's all you need to know!
-        </p>
 
         <div className="flex flex-col items-center space-y-4">
           <div className="text-lg font-semibold">
