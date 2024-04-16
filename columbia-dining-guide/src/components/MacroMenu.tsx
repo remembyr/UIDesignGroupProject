@@ -1,5 +1,5 @@
 //slide 4, 9, 14
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MyModal } from "./Modal";
 import { SimpleNavbar } from "./SimpleNavbar";
 import { Card } from "flowbite-react";
@@ -8,6 +8,23 @@ import carbsImage from "../images/macros/carbs.jpg";
 import fatsImage from "../images/macros/fats.jpg";
 
 function MacroMenu() {
+
+  const [proteinProgress, setProteinProgress] = useState(false);
+  const [carbProgress, setCarbProgress] = useState(false);
+  const [fatProgress, setFatProgress] = useState(false);
+
+  useEffect(()=> {
+    fetch("/user").then(
+      res => res.json()
+    ).then(
+      data => {
+        setProteinProgress(data.user.completedProtein);
+        setCarbProgress(data.user.completedCarbs);
+        setFatProgress(data.user.completedFat);
+        console.log(data);
+      }
+    )
+  }, [])
 
   return (
     <>
@@ -22,11 +39,21 @@ function MacroMenu() {
                         Proteins
                     </h5>
                 </Card>
-                <Card className="max-w-sm" href="/learn/carbs-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Carbs
-                    </h5>
-                </Card>
+                {proteinProgress ? (
+                    <Card className="max-w-sm" href="/learn/carbs-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          Carbs
+                      </h5>
+                    </Card>
+                  ):( 
+                    <Card className="max-w-sm" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          Carbs (do protein first)
+                      </h5>
+                    </Card>
+                  )
+                }
+                
                 <Card className="max-w-sm" href="/learn/fat-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={fatsImage} alt="Foods with high fat content" />}>
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Fats
