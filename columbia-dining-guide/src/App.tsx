@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import MacroMenu from "./components/MacroMenu";
 import { SimpleNavbar } from "./components/SimpleNavbar";
 import Learn from "./components/Learn";
+import Breakdown from "./components/Breakdown";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/learn" element={<Learn />} />
         <Route path="/learn/macros" element={<MacroMenu />} />
+        <Route path="/learn/breakdown" element={<Breakdown />} />
         {/*Add other paths here */}
       </Routes>
     </>
