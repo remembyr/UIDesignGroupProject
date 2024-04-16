@@ -23,7 +23,7 @@ export function FatsModal() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="gray" onClick={() => navigate("/learn/macros")}>
+          <Button color="gray" onClick={() => navigate("/learn/fats-quality")}>
               Back
             </Button>
           <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>

@@ -10,11 +10,13 @@ import { ProteinModal } from "./ProteinModal";
 
 function ProteinSortingGameSource() {
   const navigate = useNavigate();
+  const { isModalOpen, setModalOpen } = useModal();
 
   const checkAnswer = (() => {
     //logic for checking if correct
     if(true) {
-      navigate("/learn/macros");
+      setModalOpen(false);
+      navigate("/learn/protein-quality");
     }
   });
 

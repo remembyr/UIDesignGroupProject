@@ -10,11 +10,14 @@ import { CarbsModal } from "./CarbsModal";
 
 function CarbsSortingGameSource() {
   const navigate = useNavigate();
+  const { isModalOpen, setModalOpen } = useModal();
+
 
   const checkAnswer = (() => {
     //logic for checking if correct
     if(true) {
-      navigate("/learn/macros");
+      setModalOpen(false);
+      navigate("/learn/carbs-quality");
     }
   });
 
