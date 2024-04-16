@@ -17,7 +17,7 @@ function Home() {
           <h3 className="text-3xl text-gray-600 font-normal mb-8">
             Learn how to balance Columbia Dining meals.
           </h3>
-          <Button color={"blue"} onClick={() => navigate('/learn')} className={"font-normal"} outline>Start Learning</Button>
+          <Button color={"blue"} onClick={() => navigate('/learn/macros')} className={"font-normal"} outline>Start Learning</Button>
         </div>
       </main>
     </>

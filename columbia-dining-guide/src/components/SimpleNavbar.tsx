@@ -29,7 +29,7 @@ export function SimpleNavbar() {
       </NavbarBrand>
       <div className="flex md:order-2">
         {/* <Button onClick={() => setModalOpen(true)}>Get started</Button> */}
-        <Button onClick={() => navigate("/learn")}>Get started</Button>
+        <Button onClick={() => navigate("/learn/macros")}>Get started</Button>
         <NavbarToggle />
       </div>
       <NavbarCollapse>
