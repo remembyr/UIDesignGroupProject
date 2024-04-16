@@ -14,6 +14,9 @@ import ProteinSortingGameSource from "./components/Protein/ProteinSortingGameSou
 import FatsSortingGameSource from "./components/Fats/FatsSortingGameSource";
 import CarbsSortingGameSource from "./components/Carbs/CarbsSortingGameSource";
 import Breakdown from "./components/Breakdown";
+import Quiz from "./components/Quiz";
+
+
 
 function App() {
   return (
@@ -27,6 +30,7 @@ function App() {
         <Route path="/learn/carbs-source" element={<CarbsSortingGameSource />} />
         <Route path="/learn/fat-source" element={<FatsSortingGameSource />} />
         <Route path="/learn/breakdown" element={<Breakdown />} />
+        <Route path="/quiz" element={<Quiz />} />
         {/*Add other paths here */}
       </Routes>
     </>
