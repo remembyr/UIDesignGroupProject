@@ -15,6 +15,8 @@ import FatsSortingGameSource from "./components/Fats/FatsSortingGameSource";
 import CarbsSortingGameSource from "./components/Carbs/CarbsSortingGameSource";
 import Breakdown from "./components/Breakdown";
 import Quiz from "./components/Quiz";
+import QuizTutorial from "./components/QuizTutorial";
+import QuizResults from "./components/QuizResults";
 
 
 import CarbsGoodBadSource from "./components/Carbs/CarbsGoodBadSource";
@@ -34,7 +36,9 @@ function App() {
         <Route path="/learn/carbs-source" element={<CarbsSortingGameSource />} />
         <Route path="/learn/fat-source" element={<FatsSortingGameSource />} />
         <Route path="/learn/breakdown" element={<Breakdown />} />
-        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/quiz/1" element={<Quiz />} />
+        <Route path="/quiz/" element={<QuizTutorial />} />
+        <Route path="/quiz/results" element={<QuizResults />} />
         <Route path="/learn/carbs-quality" element={<CarbsGoodBadSource />} />
         <Route path="/learn/protein-quality" element={<ProteinGoodBadSource />} />
         <Route path="/learn/fats-quality" element={<FatsGoodBadSource />} />

@@ -1,4 +1,3 @@
-"use client";
 import { useModal } from "../contexts/ModalContext";
 import { Card, Button, Modal } from "flowbite-react";
 import React, { useState } from "react";
@@ -6,10 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Plate from "./Plate";
 import {useNavigate} from "react-router-dom";
 
-
-export default function Quiz() {
-    const navigate = useNavigate()
-
+export default function QuizResults() {
     return (
         <>
             <div className="container">
@@ -21,15 +17,9 @@ export default function Quiz() {
 
                     </div>
                     <div className="col-md-6">
-                        Meals:
-                        <div id="meal-list">
-                            <div>Dish A</div>
-                            <div>Dish B</div>
-                            <div>Dish C</div>
+                        Well done!
 
-                        </div>
-
-                        <Button color={"blue"} onClick={() => navigate('../quiz/results')} className={"font-normal"} outline>Submit</Button>
+                        Your final dish-tribution was:
                     </div>
 
                 </div>
