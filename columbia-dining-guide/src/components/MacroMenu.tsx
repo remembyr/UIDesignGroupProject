@@ -63,7 +63,7 @@ function MacroMenu() {
                     </h5>
                 </Card>
             </div>
-            <Button onClick={() => navigate("/quiz")}>Continue</Button>
+            <Button onClick={() => navigate("/learn/breakdown")}>Continue</Button>
         </Card>
       </main>
     </>

@@ -2,8 +2,12 @@ import React from "react";
 import {Card} from "flowbite-react";
 import chart from "../images/macros/pie-chart.png";
 import {Button} from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const Breakdown = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
@@ -23,7 +27,7 @@ const Breakdown = () => {
                 and weight management.
               </p>
               <div className="flex justify-center">
-                <Button color="blue" outline>Next</Button>
+                <Button color="blue" outline onClick={() => navigate('/quiz')}>Next</Button>
               </div>
             </div>
           </div>
