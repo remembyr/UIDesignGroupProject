@@ -36,9 +36,8 @@ export function SimpleNavbar() {
         <NavbarLink href="#" active>
           Home
         </NavbarLink>
-        <NavbarLink href="#">About</NavbarLink>
-        <NavbarLink href="#">Services</NavbarLink>
-        <NavbarLink href="#">Contact</NavbarLink>
+        <NavbarLink href="/learn/macros">Learn</NavbarLink>
+        <NavbarLink href="/quiz">Quiz</NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );

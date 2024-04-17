@@ -6,6 +6,8 @@ import { Card, Button } from "flowbite-react";
 import proteinImage from "../images/macros/protein.jpg";
 import carbsImage from "../images/macros/carbs.jpg";
 import fatsImage from "../images/macros/fats.jpg";
+import carbsBW from "../images/macros/carbsbw.jpg"
+import fatsBW from "../images/macros/fatsbw.jpg"
 import {useNavigate} from "react-router-dom";
 
 function MacroMenu() {
@@ -17,16 +19,17 @@ function MacroMenu() {
   const [fatProgress, setFatProgress] = useState<boolean>(false);
 
   useEffect(()=> {
-    fetch("/user").then(
-      res => res.json()
-    ).then(
-      data => {
-        setProteinProgress(data.user.completedProtein);
-        setCarbProgress(data.user.completedCarbs);
-        setFatProgress(data.user.completedFat);
-        console.log(data);
-      }
-    )
+    async function fetchData() {
+      const res = await fetch("/get_user");
+      const data = await res.json();
+
+      console.log(data);
+      setProteinProgress(data.completedProtein);
+      setCarbProgress(data.completedCarbs);
+      setFatProgress(data.completedFat);
+    }
+    
+    fetchData();
   }, [])
 
   return (
@@ -37,33 +40,58 @@ function MacroMenu() {
             <p className="font-normal text-gray-700 dark:text-gray-400">Macronutrients are the nutrients your body needs in large amounts to maintain essential functions and provide energy. They include proteins, carbohydrates, and fats, each serving unique roles in building and repairing tissues, fueling bodily processes, and supporting overall health.</p>
             <h2 className="text-xl dark:text-white">Pick a macronutrient to explore:</h2>
             <div className="mb-4 flex items-center justify-between">
-                <Card className="max-w-sm" href="/learn/protein-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={proteinImage} alt="Foods with high protein" />}>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Proteins
-                    </h5>
+                <Card className="max-w-sm" style={{cursor: "pointer"}} onClick={() => navigate("/learn/protein-source")} renderImage={() => <img style={{ width: 250, height: 175 }} src={proteinImage} alt="Foods with high protein" />}>
+                    <div style={{display: "flex"}}>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white" >
+                          Proteins
+                      </h5>
+                      {proteinProgress && <span style={{paddingLeft: "7%", paddingTop: "4%"}}>
+                        <svg className="w-3.5 h-3.5 text-green-600 lg:w-4 lg:h-4 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                        </svg>
+                      </span>}
+                    </div>
                 </Card>
-                {proteinProgress && (
-                    <Card className="max-w-sm" href="/learn/carbs-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
+                {proteinProgress ? (
+                    <Card className="max-w-sm" style={{cursor: "pointer"}} onClick={() => navigate("/learn/carbs-source")} renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
+                      <div style={{display: "flex"}}>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Carbs
+                        </h5>
+                        {carbProgress && <span style={{paddingLeft: "7%", paddingTop: "4%"}}>
+                          <svg className="w-3.5 h-3.5 text-green-600 lg:w-4 lg:h-4 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                          </svg>
+                        </span>}
+                      </div>
+                    </Card>
+                ) : (  
+                    <Card className="max-w-sm" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsBW} alt="Foods with high carbs" />}>
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                           Carbs
                       </h5>
                     </Card>
-                  )}
-                {/*{!proteinProgress && ( 
-                    <Card className="max-w-sm" renderImage={() => <img style={{ width: 250, height: 175 }} src={carbsImage} alt="Foods with high carbs" />}>
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          Carbs (do protein first)
-                      </h5>
-                    </Card>
                   )
-                }*/}
-                <Card className="max-w-sm" href="/learn/fat-source" renderImage={() => <img style={{ width: 250, height: 175 }} src={fatsImage} alt="Foods with high fat content" />}>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                }
+                {carbProgress ? <Card className="max-w-sm" style={{cursor: "pointer"}} onClick={() => navigate("/learn/fat-source")} renderImage={() => <img style={{ width: 250, height: 175 }} src={fatsImage} alt="Foods with high fat content" />}>
+                  <div style={{display: "flex"}}>
+                   <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Fats
                     </h5>
-                </Card>
+                    {fatProgress && <span style={{paddingLeft: "7%", paddingTop: "4%"}}>
+                        <svg className="w-3.5 h-3.5 text-green-600 lg:w-4 lg:h-4 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                        </svg>
+                      </span>}
+                  </div>
+                </Card> : 
+                <Card className="max-w-sm" renderImage={() => <img style={{ width: 250, height: 175 }} src={fatsBW} alt="Foods with high fat content" />}>
+                  <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      Fats
+                  </h5>
+                </Card>}
             </div>
-            <Button onClick={() => navigate("/learn/breakdown")}>Continue</Button>
+            {proteinProgress && carbProgress && fatProgress && <Button onClick={() => navigate("/learn/breakdown")}>Continue</Button>}
         </Card>
       </main>
     </>

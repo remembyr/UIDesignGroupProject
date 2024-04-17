@@ -17,9 +17,27 @@ const FatsGoodBadSource = () => {
     //logic for checking if correct
     if(true) {
       setModalOpen(false);
+      updateUserProgress();
       navigate("/learn/macros");
     }
   });
+
+  async function updateUserProgress() {
+    const res = await fetch("/get_user");
+    let data = await res.json();
+    data.completedFat = true;
+    console.log(data)
+
+    const req = await fetch("/update_user", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    });
+    let updateRes = await req.json();
+    console.log(updateRes);
+   }
 
   return (
     <>
