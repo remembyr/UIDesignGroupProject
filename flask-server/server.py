@@ -1,8 +1,11 @@
 from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 user = {"completedProtein": False, "completedCarbs": False, "completedFat": False, "quizScore":0}
 
