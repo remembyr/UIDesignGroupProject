@@ -4,6 +4,7 @@ import { MyModal } from "../Modal";
 import { SimpleNavbar } from "../SimpleNavbar";
 import { Card, Button } from "flowbite-react";
 import proteinImage from "../../images/macros/protein.jpg";
+import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { ProteinModal } from "./ProteinModal";
@@ -29,9 +30,9 @@ function ProteinSortingGameSource() {
             <img className="rounded-full" style={{ width: 450, height: 450 }} src={proteinImage} alt="Plate" />
           </div>
           <div>
-            <h1 className="text-2xl dark:text-white">Drag the dining hall food to the plate if it's a good source of protein!</h1>
-            List of foods goes here
-            <Button onClick={() => checkAnswer()}>Check Answer</Button>
+            <h1 className="text-2xl dark:text-white mb-4">Drag the dining hall food to the plate if it's a good source of protein!</h1>
+            <FoodList />
+            <Button className="mt-4" onClick={() => checkAnswer()}>Check Answer</Button>
           </div>
         </div>     
       </main>

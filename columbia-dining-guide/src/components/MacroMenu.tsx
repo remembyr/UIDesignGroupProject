@@ -19,7 +19,7 @@ function MacroMenu() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://127.0.0.1:5000/get_user");
+      const res = await fetch("/get_user");
       const data = await res.json();
 
       console.log(data);
