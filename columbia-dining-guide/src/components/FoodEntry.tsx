@@ -2,25 +2,31 @@ import React, { useState } from 'react';
 import { Card } from 'flowbite-react';
 import ProteinImg from "../images/macros/protein.jpg"
 
-const FoodEntry = () => {
+interface FoodEntryProps {
+    name: string;
+    imgURL: string;
+    draggable?: boolean;
+}
 
-    /*TO-DO: Implement drag and drop
-    https://www.w3schools.com/html/html5_draganddrop.asp */
+const FoodEntry: React.FC<FoodEntryProps> = ({ name, imgURL, draggable=true }) => {
 
-    const handleDragStart = (event: any) => {
-        event.dataTransfer.setData('text/plain', "Food Name");
-    };
+    const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+        event.dataTransfer.setData('text/plain', name);
+        event.dataTransfer.effectAllowed = 'move';
+      };
 
     return (
        <>
         <Card
-            draggable={true}
+            draggable={draggable}
             onDragStart={handleDragStart}
-            className="flex p-1 border border-gray-300 rounded"
+            className={`cursor-pointer rounded-lg border border-gray-300 p-1 flex ${
+                draggable ? 'draggable' : ''
+              }`}
         >
             <div className='flex items-center justify-between'>
-                <img className="w-35 h-20 mr-4 rounded flex-shrink-0" src={ProteinImg} alt="food" />
-                <h2 className="text-2xl font-semibold flex-grow">Food Name</h2>
+                <img className="w-35 h-20 mr-4 rounded flex-shrink-0" src={imgURL} alt="food" />
+                <h2 className="text-2xl font-semibold flex-grow">{name}</h2>
             </div>
         </Card>
        </>

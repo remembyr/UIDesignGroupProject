@@ -1,5 +1,5 @@
 //slide 6, 11, 16
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { MyModal } from "../Modal";
 import { SimpleNavbar } from "../SimpleNavbar";
 import { Card, Button } from "flowbite-react";
@@ -8,10 +8,33 @@ import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { ProteinModal } from "./ProteinModal";
+import SortingPlate from "../SortingPlate";
 
-function ProteinSortingGameSource() {
+interface Food {
+  name: string;
+  imgURL: string;
+}
+
+const ProteinSortingGameSource: React.FC = () => {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const [isLoading, setIsLoading] = useState(true);
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() => {
+    async function getFoods() {
+      const res = await fetch("/get_foods");
+      const data = await res.json();
+
+      console.log(data)
+      setFoods(data);
+      setIsLoading(false);
+    }
+
+    setTimeout(() => {
+      getFoods();
+    }, 2000);
+  }, []);
 
   const checkAnswer = (() => {
     //logic for checking if correct
@@ -21,17 +44,22 @@ function ProteinSortingGameSource() {
     }
   });
 
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    const foodType = event.dataTransfer.getData('text/plain');
+    console.log(`Dropped ${foodType} onto the plate`);
+  };
+
   return (
     <>
       <ProteinModal />
-      <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
-        <div className="grid grid-cols-2 gap-20 max-w-5xl">
-          <div>
-            <img className="rounded-full" style={{ width: 450, height: 450 }} src={proteinImage} alt="Plate" />
+      <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
+        <div className="grid grid-cols-2 gap-4 max-w-6xl">
+          <div className="mr-6">
+            <SortingPlate onDrop={handleDrop}/>
           </div>
-          <div>
+          <div className="ml-12">
             <h1 className="text-2xl dark:text-white mb-4">Drag the dining hall food to the plate if it's a good source of protein!</h1>
-            <FoodList />
+            <FoodList isLoading={isLoading} foods={foods} />
             <Button className="mt-4" onClick={() => checkAnswer()}>Check Answer</Button>
           </div>
         </div>     

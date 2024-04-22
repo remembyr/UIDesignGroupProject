@@ -11,7 +11,7 @@ export function ProteinModal() {
   return (
     <>
       <Modal size="4xl" dismissible show={!isModalOpen} onClose={() => setModalOpen(false)}>
-          <Modal.Header style={{marginTop: 10}} className="p-4 items-center"><h2>How do we identify proteins?</h2></Modal.Header>
+          <Modal.Header style={{marginTop: 10}} className="p-4 items-center"><h3>How do we identify proteins?</h3></Modal.Header>
           <Modal.Body>
             <div className="grid grid-cols-2 gap-10 max-w-5xl items-center">
               <div>

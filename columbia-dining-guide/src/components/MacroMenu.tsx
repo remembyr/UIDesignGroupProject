@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MyModal } from "./Modal";
 import { SimpleNavbar } from "./SimpleNavbar";
-import { Card, Button } from "flowbite-react";
+import { Card, Button, Spinner } from "flowbite-react";
 import proteinImage from "../images/macros/protein.jpg";
 import carbsImage from "../images/macros/carbs.jpg";
 import fatsImage from "../images/macros/fats.jpg";
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function MacroMenu() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [proteinProgress, setProteinProgress] = useState<boolean>(false);
   const [carbProgress, setCarbProgress] = useState<boolean>(false);
@@ -26,9 +27,12 @@ function MacroMenu() {
       setProteinProgress(data.completedProtein);
       setCarbProgress(data.completedCarbs);
       setFatProgress(data.completedFat);
+      setIsLoading(false);
     }
 
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 2000);
   }, []);
 
   return (
@@ -46,7 +50,14 @@ function MacroMenu() {
           <h2 className="text-xl dark:text-white">
             Pick a macronutrient to explore:
           </h2>
-          <div className="mb-4 flex items-center justify-between">
+          
+            {isLoading ? <div className="mb-4 flex items-center justify-between px-24">
+              <Spinner />
+              <Spinner />
+              <Spinner /> </div>
+              :
+
+            <div className="mb-4 flex items-center justify-between">
             <Card
               className="max-w-sm"
               style={{ cursor: "pointer" }}
@@ -192,7 +203,8 @@ function MacroMenu() {
                 </h5>
               </Card>
             )}
-          </div>
+            </div>
+          }
           {proteinProgress && carbProgress && fatProgress && (
             <Button onClick={() => navigate("/learn/breakdown")}>
               Continue
