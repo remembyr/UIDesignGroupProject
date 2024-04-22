@@ -8,30 +8,58 @@ export function ProteinQualityModal() {
 
   return (
     <>
-      <Modal dismissible show={!isModalOpen} onClose={() => setModalOpen(false)}>
-        <Modal.Header>How do we identify proteins?</Modal.Header>
-        <Modal.Body>
-          <div className="space-y-6">
-            <p className="text-base font-bold leading-relaxed text-gray-500 dark:text-gray-400">
-              But not all proteins are good!
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              Protein from plants is generally very healthy, so go for garbanzo beans in your salad!
-              Lean meats like chicken, turkey, and pork are also good, as well as fish like salmon and tuna.
-              <br />
-              Watch out though, red meats and heavily processed meats all can raise cholesterol and hurt
-              your heart!
-
-            </p>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button color="gray" onClick={() => navigate("/learn/macros")}>
-              Back
-            </Button>
-          <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>
-          
-        </Modal.Footer>
+      <Modal size="4xl" dismissible show={!isModalOpen} onClose={() => setModalOpen(false)}>
+          <Modal.Header style={{marginTop: 10}} className="p-4 items-center"><h2>But not all proteins are good!</h2></Modal.Header>
+          <Modal.Body>
+            <div className="grid grid-cols-2 gap-10 max-w-5xl">
+              <div className="space-y-6 border-r border-gray-300">
+                <p className="text-3xl leading-relaxed text-gray-500 dark:text-gray-400 mb-0">
+                  Look for...
+                </p>
+                <ul className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400 list-disc ml-4 mt-0">
+                  <li>plant proteins</li>
+                    <ul className="text-xl leading-relaxed text-gray-400 dark:text-gray-400 list-square ml-4">
+                      <li>chickpeas</li>
+                    </ul>
+                  <li>lean meats</li>
+                    <ul className="text-xl leading-relaxed text-gray-400 dark:text-gray-400 list-square ml-4">
+                      <li>chicken</li>
+                      <li>turkey</li>
+                      <li>pork</li>
+                    </ul>
+                  <li>fish</li>
+                    <ul className="text-xl leading-relaxed text-gray-400 dark:text-gray-400 list-square ml-4">
+                      <li>salmon</li>
+                      <li>tuna</li>
+                    </ul>
+                </ul>
+              </div>
+              <div className="space-y-6">
+                <p className="text-3xl leading-relaxed text-gray-500 dark:text-gray-400 mb-0">
+                  Avoid...
+                </p>
+                <ul className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400 list-disc ml-4 mt-0">
+                  <li>red meats</li>
+                    <ul className="text-xl leading-relaxed text-gray-400 dark:text-gray-400 list-square ml-4">
+                      <li>beef</li>
+                      <li>lamb</li>
+                    </ul>
+                  <li>heavily processed meats</li>
+                    <ul className="text-xl leading-relaxed text-gray-400 dark:text-gray-400 list-square ml-4">
+                      <li>sausage</li>
+                      <li>hot dogs</li>
+                      <li>pepperoni</li>
+                    </ul>
+                </ul>
+              </div>
+            </div> 
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="gray" onClick={() => navigate("/learn/protein-source")}>
+                Back
+              </Button>
+            <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>
+          </Modal.Footer>
       </Modal>
     </>
   );

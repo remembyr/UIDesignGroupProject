@@ -5,9 +5,10 @@ import proteinImage from '../images/macros/protein.jpg';
 
 interface SortingPlateProps {
     onDrop: (event: React.DragEvent<HTMLDivElement>) =>  void;
+    macro: string;
 }
 
-const SortingPlate: React.FC<SortingPlateProps> = ({onDrop}) => {
+const SortingPlate: React.FC<SortingPlateProps> = ({onDrop, macro}) => {
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         onDrop(event);
@@ -24,7 +25,7 @@ const SortingPlate: React.FC<SortingPlateProps> = ({onDrop}) => {
         onDragOver={handleDragOver}
       >
         <span className="relative top-16 text-gray-700 text-xl font-semibold">
-            Drag proteins here
+            Drag {macro}s here
         </span>
       </div>
     )

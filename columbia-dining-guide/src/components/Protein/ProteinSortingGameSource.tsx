@@ -55,7 +55,7 @@ const ProteinSortingGameSource: React.FC = () => {
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid grid-cols-2 gap-4 max-w-6xl">
           <div className="mr-6">
-            <SortingPlate onDrop={handleDrop}/>
+            <SortingPlate onDrop={handleDrop} macro="protein"/>
           </div>
           <div className="ml-12">
             <h1 className="text-2xl dark:text-white mb-4">Drag the dining hall food to the plate if it's a good source of protein!</h1>
