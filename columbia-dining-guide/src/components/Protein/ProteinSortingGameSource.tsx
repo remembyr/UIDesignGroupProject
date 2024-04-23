@@ -1,5 +1,5 @@
 //slide 6, 11, 16
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { MyModal } from "../Modal";
 import { SimpleNavbar } from "../SimpleNavbar";
 import { Card, Button } from "flowbite-react";
@@ -23,10 +23,10 @@ const ProteinSortingGameSource: React.FC = () => {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("/get_foods");
+      const res = await fetch("http://127.0.0.1:5000/get_foods");
       const data = await res.json();
 
-      console.log(data)
+      console.log(data);
       setFoods(data);
       setIsLoading(false);
     }
@@ -36,16 +36,16 @@ const ProteinSortingGameSource: React.FC = () => {
     }, 2000);
   }, []);
 
-  const checkAnswer = (() => {
+  const checkAnswer = () => {
     //logic for checking if correct
-    if(true) {
+    if (true) {
       setModalOpen(false);
       navigate("/learn/protein-quality");
     }
-  });
+  };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    const foodType = event.dataTransfer.getData('text/plain');
+    const foodType = event.dataTransfer.getData("text/plain");
     console.log(`Dropped ${foodType} onto the plate`);
   };
 
@@ -53,19 +53,24 @@ const ProteinSortingGameSource: React.FC = () => {
     <>
       <ProteinModal />
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
-        <div className="grid grid-cols-2 gap-4 max-w-6xl">
+        <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
-            <SortingPlate onDrop={handleDrop} macro="protein"/>
+            <SortingPlate onDrop={handleDrop} macro="protein" />
           </div>
           <div className="ml-12">
-            <h1 className="text-2xl dark:text-white mb-4">Drag the dining hall food to the plate if it's a good source of protein!</h1>
+            <h1 className="mb-4 text-2xl dark:text-white">
+              Drag the dining hall food to the plate if it's a good source of
+              protein!
+            </h1>
             <FoodList isLoading={isLoading} foods={foods} />
-            <Button className="mt-4" onClick={() => checkAnswer()}>Check Answer</Button>
+            <Button className="mt-4" onClick={() => checkAnswer()}>
+              Check Answer
+            </Button>
           </div>
-        </div>     
+        </div>
       </main>
     </>
   );
-}
+};
 
 export default ProteinSortingGameSource;
