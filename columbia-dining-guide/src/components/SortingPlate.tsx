@@ -1,14 +1,12 @@
 import React from 'react';
-import { Card } from 'flowbite-react';
-import FoodEntry from './FoodEntry';
-import proteinImage from '../images/macros/protein.jpg';
 
 interface SortingPlateProps {
     onDrop: (event: React.DragEvent<HTMLDivElement>) =>  void;
     macro: string;
+    foods: String[];
 }
 
-const SortingPlate: React.FC<SortingPlateProps> = ({onDrop, macro}) => {
+const SortingPlate: React.FC<SortingPlateProps> = ({onDrop, macro, foods}) => {
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         onDrop(event);
@@ -24,9 +22,16 @@ const SortingPlate: React.FC<SortingPlateProps> = ({onDrop, macro}) => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <span className="relative top-16 text-gray-700 text-xl font-semibold">
-            Drag {macro}s here
-        </span>
+        <div>
+          <span className="relative top-16 text-gray-700 text-xl font-semibold">
+              Drag {macro}s here
+          </span>
+          <div className="relative top-20 text-center">
+            {foods.map((foodName) => (
+              <div>{foodName}</div>
+            ))}
+          </div>
+        </div>
       </div>
     )
 }

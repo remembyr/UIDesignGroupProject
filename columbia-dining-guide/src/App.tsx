@@ -30,7 +30,6 @@ function App() {
       <SimpleNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/learn" element={<Learn />} />
         <Route path="/learn/macros" element={<MacroMenu />} />
         <Route path="/learn/protein-source" element={<ProteinSortingGameSource />} />
         <Route path="/learn/carbs-source" element={<CarbsSortingGameSource />} />
