@@ -30,7 +30,7 @@ function ProteinGoodBadSource() {
       const res = await fetch("/get_foods");
       const data = await res.json();
 
-      console.log(data)
+      console.log(data);
       setFoods(data);
       setIsLoading(false);
     }
@@ -39,18 +39,18 @@ function ProteinGoodBadSource() {
       getFoods();
     }, 2000);
   }, [forceUpdate]);
-  
+
   const checkAnswer = async () => {
     const req = await fetch("http://127.0.0.1:5000/check_protein_quality", {
       method: "POST",
-      body: JSON.stringify({'userAnswer': goodUserChoices}),
+      body: JSON.stringify({ userAnswer: goodUserChoices }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
     let res = await req.json();
-    if(res.isCorrect) {
-      alert("Great work, you got it all correct!")
+    if (res.isCorrect) {
+      alert("Great work, you got it all correct!");
       updateUserProgress();
       setModalOpen(false);
       navigate("/learn/macros");
@@ -58,7 +58,7 @@ function ProteinGoodBadSource() {
       alert("Something's amiss...try again!");
       setBadUserChoices([]);
       setGoodUserChoices([]);
-      setForceUpdate(forceUpdate+1);
+      setForceUpdate(forceUpdate + 1);
     }
   };
 
@@ -109,14 +109,26 @@ function ProteinGoodBadSource() {
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>
-            <GoodBadSortingPlate onDropGood={handleDropGood} onDropBad={handleDropBad} goodFoods={goodUserChoices} badFoods={badUserChoices}/>
+            <GoodBadSortingPlate
+              onDropGood={handleDropGood}
+              onDropBad={handleDropBad}
+              goodFoods={goodUserChoices}
+              badFoods={badUserChoices}
+            />
           </div>
           <div>
-            <h1 className="text-2xl dark:text-white mb-4">
-              Drag the dining hall food to the correct side of the plate depending on if it's a good or bad protein!
+            <h1 className="mb-4 text-2xl dark:text-white">
+              Drag the dining hall food to the correct side of the plate
+              depending on if it's a good or bad protein!
             </h1>
-            <FoodList isLoading={isLoading} foods={foods}/>
-            <Button className="mt-4" onClick={() => checkAnswer()} disabled={foods.length > 0}>Check Answer</Button>
+            <FoodList isLoading={isLoading} foods={foods} />
+            <Button
+              className="mt-4"
+              onClick={() => checkAnswer()}
+              disabled={foods.length > 0}
+            >
+              Check Answer
+            </Button>
           </div>
         </div>
       </main>
