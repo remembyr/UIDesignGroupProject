@@ -26,7 +26,7 @@ const SortingPlate: React.FC<SortingPlateProps> = ({onDrop, macro, foods}) => {
           <span className="relative top-16 text-gray-700 text-xl font-semibold">
               Drag {macro}s here
           </span>
-          <div className="relative top-20 text-center">
+          <div className="relative top-20 text-gray-600 text-lg text-center">
             {foods.map((foodName) => (
               <div>{foodName}</div>
             ))}

@@ -50,5 +50,15 @@ def check_protein_source():
    
    return jsonify(isCorrect=isCorrect)
 
+@app.route('/check_protein_quality', methods=['GET', 'POST'])
+def check_protein_quality():
+   correctAnswer = sorted(['Red Lentil Dahl', 'Fac House Salmon', 'Chickpeas'])
+   req = request.get_json()
+   userAnswer = sorted(req['userAnswer'])
+   
+   isCorrect = correctAnswer == userAnswer
+   
+   return jsonify(isCorrect=isCorrect)
+
 if __name__ == "__main__":
     app.run(debug=True)
