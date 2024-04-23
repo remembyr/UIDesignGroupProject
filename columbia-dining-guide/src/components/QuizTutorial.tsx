@@ -15,13 +15,13 @@ export default function QuizTutorial() {
           title: 'Step 1',
           content: "It's time to create a balanced meal that adheres to the 50-30-20 dietary rule, using foods commonly found in Columbia University's dining halls.",
         },
+        // {
+        //   title: 'Step 2',
+        //   content: 'Move the circles on the border of the plate to change the portion sizes. Ideally, you want meals and portions that allow for as close to 50% carbs, 30% protein, and 20% fat (in grams).',
+        // },
         {
-          title: 'Step 2',
-          content: 'Move the circles on the border of the plate to change the portion sizes. Ideally, you want meals and portions that allow for as close to 50% carbs, 30% protein, and 20% fat (in grams).',
-        },
-        {
-            title: 'Step 3',
-            content: `You will start off with one dish preselected for you. It's up to you to choose one or two others to balance it out!`,
+            title: 'Step 2',
+            content: `You will start off with one dish preselected for you. It's up to you to choose one or two others to balance it out! Ideally, you want meals and portions that allow for as close to 50% carbs, 30% protein, and 20% fat (in grams).`,
         }
     ]
 

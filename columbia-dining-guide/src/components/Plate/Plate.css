@@ -1,0 +1,45 @@
+#circle {
+    width: 400px;
+    height: 400px;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 200px;
+
+}
+
+#percent50-segment {
+    width: 250px;
+    height: 150px;
+    border-width: 2px;
+    border-color: rgb(175, 172, 172);
+    position: relative;
+    top: 75px;
+    left: 25px;
+    transform: rotate(-45deg);
+}
+
+#percent20-segment {
+    width: 100px;
+    height: 85px;
+    border-width: 2px;
+    border-color: rgb(175, 172, 172);
+    position: relative;
+    top: 135px;
+    left: 125px;
+    transform: rotate(15deg);
+}
+
+#percent30-segment {
+    width: 100px;
+    height: 135px;
+    border-width: 2px;
+    border-color: rgb(175, 172, 172);
+    position: relative;
+    top: -80px;
+    left: 250px;
+    transform: rotate(15deg);
+}
+
+.meal {
+    user-select: none;
+}
