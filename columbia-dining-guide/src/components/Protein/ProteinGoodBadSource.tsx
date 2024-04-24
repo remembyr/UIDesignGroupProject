@@ -21,13 +21,16 @@ function ProteinGoodBadSource() {
   const { isModalOpen, setModalOpen } = useModal();
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
+  const [goodUserChoices, setGoodUserChoices] = useState<String[]>([]);
+  const [badUserChoices, setBadUserChoices] = useState<String[]>([]);
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("/get_foods");
+      const res = await fetch("http://127.0.0.1:5000/get_foods");
       const data = await res.json();
 
-      console.log(data)
+      console.log(data);
       setFoods(data);
       setIsLoading(false);
     }
@@ -35,14 +38,27 @@ function ProteinGoodBadSource() {
     setTimeout(() => {
       getFoods();
     }, 2000);
-  }, []);
-  
-  const checkAnswer = () => {
-    //logic for checking if correct
-    if (true) {
-      setModalOpen(false);
+  }, [forceUpdate]);
+
+  const checkAnswer = async () => {
+    const req = await fetch("http://127.0.0.1:5000/check_protein_quality", {
+      method: "POST",
+      body: JSON.stringify({ userAnswer: goodUserChoices }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    let res = await req.json();
+    if (res.isCorrect) {
+      alert("Great work, you got it all correct!");
       updateUserProgress();
+      setModalOpen(false);
       navigate("/learn/macros");
+    } else {
+      alert("Something's amiss...try again!");
+      setBadUserChoices([]);
+      setGoodUserChoices([]);
+      setForceUpdate(forceUpdate + 1);
     }
   };
 
@@ -64,13 +80,27 @@ function ProteinGoodBadSource() {
   }
 
   const handleDropGood = (event: React.DragEvent<HTMLDivElement>) => {
-    // Handle dropping good items here
-    console.log('Dropped a good item!');
+    const foodType = event.dataTransfer.getData("text/plain");
+    const updatedFoods = foods.filter((food) => {
+      return food.name !== foodType;
+    });
+    setFoods(updatedFoods);
+
+    const updatedGoodUserChoices: String[] = goodUserChoices;
+    updatedGoodUserChoices.push(foodType);
+    setGoodUserChoices(updatedGoodUserChoices);
   };
 
   const handleDropBad = (event: React.DragEvent<HTMLDivElement>) => {
-    // Handle dropping bad items here
-    console.log('Dropped a bad item!');
+    const foodType = event.dataTransfer.getData("text/plain");
+    const updatedFoods = foods.filter((food) => {
+      return food.name !== foodType;
+    });
+    setFoods(updatedFoods);
+
+    const updatedBadUserChoices: String[] = badUserChoices;
+    updatedBadUserChoices.push(foodType);
+    setBadUserChoices(updatedBadUserChoices);
   };
 
   return (
@@ -79,15 +109,27 @@ function ProteinGoodBadSource() {
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>
-            <GoodBadSortingPlate onDropGood={handleDropGood} onDropBad={handleDropBad}/>
+            <GoodBadSortingPlate
+              onDropGood={handleDropGood}
+              onDropBad={handleDropBad}
+              macro="Protein"
+              goodFoods={goodUserChoices}
+              badFoods={badUserChoices}
+            />
           </div>
           <div>
-            <h1 className="text-2xl dark:text-white mb-4">
-              Drag the dining hall food to the plate if it's a good source of
-              protein!
+            <h1 className="mb-4 text-2xl dark:text-white">
+              Drag the dining hall food to the correct side of the plate
+              depending on if it's a good or bad protein!
             </h1>
-            <FoodList isLoading={isLoading} foods={foods}/>
-            <Button className="mt-4" onClick={() => checkAnswer()}>Check Answer</Button>
+            <FoodList isLoading={isLoading} foods={foods} />
+            <Button
+              className="mt-4"
+              onClick={() => checkAnswer()}
+              disabled={foods.length > 0}
+            >
+              Check Answer
+            </Button>
           </div>
         </div>
       </main>

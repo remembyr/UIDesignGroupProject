@@ -1,42 +1,96 @@
 //slide 6, 11, 16
-import React, {useEffect} from "react";
-import { MyModal } from "../Modal";
-import { SimpleNavbar } from "../SimpleNavbar";
-import { Card, Button } from "flowbite-react";
-import proteinImage from "../../images/macros/protein.jpg";
+import React, { useEffect, useState } from "react";
+import { Button } from "flowbite-react";
+import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { FatsModal } from "./FatsModal";
+import SortingPlate from "../SortingPlate";
 
-function FatsSortingGameSource () {
+interface Food {
+  name: string;
+  imgURL: string;
+}
+
+const FatsSortingGameSource: React.FC = () => {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const [isLoading, setIsLoading] = useState(true);
+  const [foods, setFoods] = useState<Food[]>([]);
+  const [userChoices, setUserChoices] = useState<String[]>([]);
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
-  const checkAnswer = (() => {
-    //logic for checking if correct
-    if(true) {
+  useEffect(() => {
+    async function getFoods() {
+      const res = await fetch("http://127.0.0.1:5000/get_foods");
+      const data = await res.json();
+
+      console.log(data);
+      setFoods(data);
+      setIsLoading(false);
+    }
+
+    setTimeout(() => {
+      getFoods();
+    }, 2000);
+  }, [forceUpdate]);
+
+  const checkAnswer = async () => {
+    const req = await fetch("http://127.0.0.1:5000/check_protein_source", {
+      method: "POST",
+      body: JSON.stringify({ userAnswer: userChoices }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    let res = await req.json();
+    if (res.isCorrect) {
+      alert("Great work, you got it all correct!");
       setModalOpen(false);
       navigate("/learn/fats-quality");
+    } else {
+      alert("Something's amiss...try again!");
+      setUserChoices([]);
+      setForceUpdate(forceUpdate + 1);
     }
-  });
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    const foodType = event.dataTransfer.getData("text/plain");
+    console.log(`Dropped ${foodType} onto the plate`);
+    const updatedFoods = foods.filter((food) => {
+      return food.name !== foodType;
+    });
+    setFoods(updatedFoods);
+
+    const updatedUserChoices: String[] = userChoices;
+    updatedUserChoices.push(foodType);
+    setUserChoices(updatedUserChoices);
+    console.log(updatedUserChoices);
+  };
 
   return (
     <>
       <FatsModal />
-      <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
-        <div className="grid grid-cols-2 gap-20 max-w-5xl">
-          <div>
-            <img className="rounded-full" style={{ width: 450, height: 450 }} src={proteinImage} alt="Plate" />
+      <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
+        <div className="grid max-w-6xl grid-cols-2 gap-4">
+          <div className="mr-6">
+            <SortingPlate onDrop={handleDrop} macro="fat" foods={userChoices} />
           </div>
-          <div>
-            <h1 className="text-2xl dark:text-white">Drag the dining hall food to the plate if it's a good source of fat!</h1>
-            List of foods goes here
-            <Button onClick={() => checkAnswer()}>Check Answer</Button>
+          <div className="ml-12">
+            <h1 className="mb-4 text-2xl dark:text-white">
+              Drag the dining hall food to the plate if it's a good source of
+              fat!
+            </h1>
+            <FoodList isLoading={isLoading} foods={foods} />
+            <Button className="mt-4" onClick={() => checkAnswer()}>
+              Check Answer
+            </Button>
           </div>
-        </div>     
+        </div>
       </main>
     </>
   );
-}
+};
 
 export default FatsSortingGameSource;

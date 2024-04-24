@@ -1,8 +1,6 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
-import $ from "jquery";
-import "jquery-ui";
 import { Button } from "flowbite-react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDrag } from 'react-dnd';

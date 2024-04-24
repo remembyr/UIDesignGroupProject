@@ -1,9 +1,6 @@
 //slide 6, 11, 16
 import React, { useEffect, useState } from "react";
-import { MyModal } from "../Modal";
-import { SimpleNavbar } from "../SimpleNavbar";
-import { Card, Button } from "flowbite-react";
-import proteinImage from "../../images/macros/protein.jpg";
+import { Button } from "flowbite-react";
 import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
@@ -20,6 +17,8 @@ const ProteinSortingGameSource: React.FC = () => {
   const { isModalOpen, setModalOpen } = useModal();
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
+  const [userChoices, setUserChoices] = useState<String[]>([]);
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
     async function getFoods() {
@@ -34,20 +33,40 @@ const ProteinSortingGameSource: React.FC = () => {
     setTimeout(() => {
       getFoods();
     }, 2000);
-  }, []);
+  }, [forceUpdate]);
 
-  const checkAnswer = () => {
-    //logic for checking if correct
-    if (true) {
+  const checkAnswer = async () => {
+    const req = await fetch("http://127.0.0.1:5000/check_protein_source", {
+      method: "POST",
+      body: JSON.stringify({'userAnswer': userChoices}),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    let res = await req.json();
+    if(res.isCorrect) {
+      alert("Great work, you got it all correct!")
       setModalOpen(false);
       navigate("/learn/protein-quality");
+    } else {
+      alert("Something's amiss...try again!");
+      setUserChoices([]);
+      setForceUpdate(forceUpdate+1);
     }
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     const foodType = event.dataTransfer.getData("text/plain");
     console.log(`Dropped ${foodType} onto the plate`);
+    const updatedFoods = foods.filter((food) => {
+      return food.name !== foodType;
+    });
+    setFoods(updatedFoods);
 
+    const updatedUserChoices: String[] = userChoices;
+    updatedUserChoices.push(foodType);
+    setUserChoices(updatedUserChoices);
+    console.log(updatedUserChoices);
   };
 
   return (
@@ -56,7 +75,7 @@ const ProteinSortingGameSource: React.FC = () => {
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
-            <SortingPlate onDrop={handleDrop} macro="protein" />
+            <SortingPlate onDrop={handleDrop} macro="protein" foods={userChoices}/>
           </div>
           <div className="ml-12">
             <h1 className="mb-4 text-2xl dark:text-white">
