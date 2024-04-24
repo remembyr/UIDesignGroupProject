@@ -25,24 +25,33 @@ import FatsGoodBadSource from "./components/Fats/FatsGoodBadSource";
 
 function App() {
   return (
-    <>
+    <div className="bg-green-200">
       <SimpleNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/learn/macros" element={<MacroMenu />} />
-        <Route path="/learn/protein-source" element={<ProteinSortingGameSource />} />
-        <Route path="/learn/carbs-source" element={<CarbsSortingGameSource />} />
+        <Route
+          path="/learn/protein-source"
+          element={<ProteinSortingGameSource />}
+        />
+        <Route
+          path="/learn/carbs-source"
+          element={<CarbsSortingGameSource />}
+        />
         <Route path="/learn/fat-source" element={<FatsSortingGameSource />} />
         <Route path="/learn/breakdown" element={<Breakdown />} />
         <Route path="/quiz/1" element={<Quiz />} />
         <Route path="/quiz/" element={<QuizTutorial />} />
         <Route path="/quiz/results" element={<QuizResults />} />
         <Route path="/learn/carbs-quality" element={<CarbsGoodBadSource />} />
-        <Route path="/learn/protein-quality" element={<ProteinGoodBadSource />} />
+        <Route
+          path="/learn/protein-quality"
+          element={<ProteinGoodBadSource />}
+        />
         <Route path="/learn/fats-quality" element={<FatsGoodBadSource />} />
         {/*Add other paths here */}
       </Routes>
-    </>
+    </div>
   );
 }
 

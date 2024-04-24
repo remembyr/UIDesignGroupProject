@@ -4,13 +4,18 @@ const flowbite = require("flowbite-react/tailwind");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", flowbite.content()],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "deep-orange": "#FFAB91",
+        "green-200": "#A5D6A7",
+      },
+    },
     listStyleType: {
-      none: 'none',
-      disc: 'disc',
-      square: 'square',
-      roman: 'upper-roman',
-    }
+      none: "none",
+      disc: "disc",
+      square: "square",
+      roman: "upper-roman",
+    },
   },
   plugins: [flowbite.plugin()],
 };
