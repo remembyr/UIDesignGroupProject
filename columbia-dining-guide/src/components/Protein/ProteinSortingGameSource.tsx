@@ -22,7 +22,7 @@ const ProteinSortingGameSource: React.FC = () => {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("http://127.0.0.1:5000/get_foods");
+      const res = await fetch("http://127.0.0.1:5000/get_protein");
       const data = await res.json();
 
       console.log(data);
@@ -38,20 +38,20 @@ const ProteinSortingGameSource: React.FC = () => {
   const checkAnswer = async () => {
     const req = await fetch("http://127.0.0.1:5000/check_protein_source", {
       method: "POST",
-      body: JSON.stringify({'userAnswer': userChoices}),
+      body: JSON.stringify({ userAnswer: userChoices }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
     let res = await req.json();
-    if(res.isCorrect) {
-      alert("Great work, you got it all correct!")
+    if (res.isCorrect) {
+      alert("Great work, you got it all correct!");
       setModalOpen(false);
       navigate("/learn/protein-quality");
     } else {
       alert("Something's amiss...try again!");
       setUserChoices([]);
-      setForceUpdate(forceUpdate+1);
+      setForceUpdate(forceUpdate + 1);
     }
   };
 
@@ -75,7 +75,11 @@ const ProteinSortingGameSource: React.FC = () => {
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
-            <SortingPlate onDrop={handleDrop} macro="protein" foods={userChoices}/>
+            <SortingPlate
+              onDrop={handleDrop}
+              macro="protein"
+              foods={userChoices}
+            />
           </div>
           <div className="ml-12">
             <h1 className="mb-4 text-2xl dark:text-white">
