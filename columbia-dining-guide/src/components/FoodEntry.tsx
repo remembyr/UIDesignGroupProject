@@ -25,7 +25,7 @@ const FoodEntry: React.FC<FoodEntryProps> = ({ name, imgURL, draggable=true }) =
               }`}
         >
             <div className='flex items-center justify-between'>
-                <img className="w-35 h-20 mr-4 rounded flex-shrink-0" src={imgURL} alt="food" />
+                <img style={{width: '7.5rem', height: '5rem'}} className="w-35 h-20 mr-4 rounded flex-shrink-0" src={imgURL} alt="food" />
                 <h2 className="text-2xl font-semibold flex-grow">{name}</h2>
             </div>
         </Card>
