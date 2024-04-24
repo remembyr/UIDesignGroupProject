@@ -40,6 +40,37 @@
     transform: rotate(15deg);
 }
 
-.meal {
+
+.non-select {
     user-select: none;
+}
+
+#meal-50-x {
+    display: inline;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin-left: 20px;
+}
+
+#meal-20-x {
+    display: inline;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin-left: 20px;
+}
+
+
+#meal-30-x {
+    display: inline;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    margin-left: 20px;
+}
+
+
+.plate-label {
+    display: inline-block;
 }

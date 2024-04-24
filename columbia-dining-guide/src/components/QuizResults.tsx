@@ -7,23 +7,25 @@ import {useNavigate} from "react-router-dom";
 
 export default function QuizResults() {
     return (
-        <>
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
-                        Plate:
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6">
+                    Plate:
 
-                        <Plate />
-
-                    </div>
-                    <div className="col-md-6">
-                        Well done!
-
-                        Your final dish-tribution was:
-                    </div>
+                    <Plate />
 
                 </div>
+                <div className="col-md-6">
+                    Well done!
+
+                    Your final dish-tribution was:
+
+                    <p id="carbs-results">Carbs: </p>
+                    <p id="protein-results">Protein: </p>
+                    <p id="fat-results">Fat: </p>
+                </div>
+
             </div>
-        </>
+        </div>
     )
 }

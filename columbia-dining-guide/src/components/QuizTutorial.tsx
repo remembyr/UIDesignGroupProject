@@ -43,10 +43,8 @@ export default function QuizTutorial() {
     return (
 
         <>
-
             {currentStep < tutorialSteps.length && <Modal
                 show={true}
-                // onClose={() => setShowModal1(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >

@@ -47,6 +47,7 @@ const ProteinSortingGameSource: React.FC = () => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     const foodType = event.dataTransfer.getData("text/plain");
     console.log(`Dropped ${foodType} onto the plate`);
+
   };
 
   return (
