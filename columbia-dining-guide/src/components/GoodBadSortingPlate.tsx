@@ -5,11 +5,12 @@ import FoodEntry from './FoodEntry';
 interface GoodBadSortingPlateProps {
   onDropGood: (event: React.DragEvent<HTMLDivElement>) => void;
   onDropBad: (event: React.DragEvent<HTMLDivElement>) => void;
+  macro: String;
   goodFoods: String[];
   badFoods: String[];
 }
 
-const GoodBadSortingPlate: React.FC<GoodBadSortingPlateProps> = ({ onDropGood, onDropBad, goodFoods, badFoods }) => {
+const GoodBadSortingPlate: React.FC<GoodBadSortingPlateProps> = ({ onDropGood, onDropBad, macro, goodFoods, badFoods }) => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>, category: 'good' | 'bad') => {
     event.preventDefault();
     if (category === 'good') {
@@ -33,7 +34,7 @@ const GoodBadSortingPlate: React.FC<GoodBadSortingPlateProps> = ({ onDropGood, o
         onDragOver={handleDragOver}
       >
       <div>
-        <span className="relative -right-10 top-16 text-green-800 text-xl font-semibold">Good Proteins</span>
+        <span className="relative -right-10 top-16 text-green-800 text-xl font-semibold">Good {macro}s</span>
         <div className="relative -right-4 top-20 text-lg text-gray-600 text-right">
             {goodFoods.map((foodName) => (
               <div>{foodName}</div>
@@ -50,7 +51,7 @@ const GoodBadSortingPlate: React.FC<GoodBadSortingPlateProps> = ({ onDropGood, o
         onDragOver={handleDragOver}
       >
         <div>
-          <span className="relative -left-6 top-16 text-red-800 text-xl font-semibold">Bad Proteins</span>
+          <span className="relative -left-6 top-16 text-red-800 text-xl font-semibold">Bad {macro}s</span>
           <div className="relative -left-6 top-20 text-lg text-gray-600">
               {badFoods.map((foodName) => (
                 <div>{foodName}</div>

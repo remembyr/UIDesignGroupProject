@@ -18,7 +18,6 @@ import Quiz from "./components/Quiz";
 import QuizTutorial from "./components/QuizTutorial";
 import QuizResults from "./components/QuizResults";
 
-
 import CarbsGoodBadSource from "./components/Carbs/CarbsGoodBadSource";
 import ProteinGoodBadSource from "./components/Protein/ProteinGoodBadSource";
 import FatsQualityModal from "./components/Fats/FatsQualityModal";

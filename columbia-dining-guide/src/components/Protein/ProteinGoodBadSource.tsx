@@ -112,6 +112,7 @@ function ProteinGoodBadSource() {
             <GoodBadSortingPlate
               onDropGood={handleDropGood}
               onDropBad={handleDropBad}
+              macro="Protein"
               goodFoods={goodUserChoices}
               badFoods={badUserChoices}
             />

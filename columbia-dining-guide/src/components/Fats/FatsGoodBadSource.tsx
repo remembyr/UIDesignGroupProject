@@ -112,6 +112,7 @@ function FatsGoodBadSource() {
             <GoodBadSortingPlate
               onDropGood={handleDropGood}
               onDropBad={handleDropBad}
+              macro="Fat"
               goodFoods={goodUserChoices}
               badFoods={badUserChoices}
             />
