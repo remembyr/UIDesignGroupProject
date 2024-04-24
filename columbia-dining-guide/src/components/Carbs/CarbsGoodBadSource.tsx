@@ -127,6 +127,7 @@ function CarbsGoodBadSource() {
               className="mt-4"
               onClick={() => checkAnswer()}
               disabled={foods.length > 0}
+              style={{ backgroundColor: "#ff4500" }}
             >
               Check Answer
             </Button>

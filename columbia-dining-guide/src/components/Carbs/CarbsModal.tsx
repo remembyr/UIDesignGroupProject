@@ -16,18 +16,23 @@ export function CarbsModal() {
               You chose to explore carbohydrates!
             </p>
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-            Carbohydrates are found in foods like fruits, vegetables, breads, pastas, and grains.
-             They can be categorized into simple carbs (sugars) and complex carbs (starches and fibers), 
-             both of which provide energy to the body.
+              Carbohydrates are found in foods like fruits, vegetables, breads,
+              pastas, and grains. They can be categorized into simple carbs
+              (sugars) and complex carbs (starches and fibers), both of which
+              provide energy to the body.
             </p>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button color="gray" onClick={() => navigate("/learn/macros")}>
-              Back
-            </Button>
-          <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>
-          
+            Back
+          </Button>
+          <Button
+            onClick={() => setModalOpen(true)}
+            style={{ backgroundColor: "#ff4500" }}
+          >
+            Play Sorting Game
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

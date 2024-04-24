@@ -87,7 +87,11 @@ const CarbsSortingGameSource: React.FC = () => {
               carbohydrates!
             </h1>
             <FoodList isLoading={isLoading} foods={foods} />
-            <Button className="mt-4" onClick={() => checkAnswer()}>
+            <Button
+              className="mt-4"
+              onClick={() => checkAnswer()}
+              style={{ backgroundColor: "#ff4500" }}
+            >
               Check Answer
             </Button>
           </div>

@@ -43,10 +43,19 @@ export function FatsModal() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="gray" onClick={() => navigate("/learn/macros")}>
+          <Button
+            color="gray"
+            onClick={() => navigate("/learn/macros")}
+            style={{ backgroundColor: "#ff4500" }}
+          >
             Back
           </Button>
-          <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>
+          <Button
+            onClick={() => setModalOpen(true)}
+            style={{ backgroundColor: "#ff4500" }}
+          >
+            Play Sorting Game
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
