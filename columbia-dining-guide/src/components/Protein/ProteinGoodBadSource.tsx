@@ -27,7 +27,7 @@ function ProteinGoodBadSource() {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("/get_foods");
+      const res = await fetch("http://127.0.0.1:5000/get_foods");
       const data = await res.json();
 
       console.log(data);
