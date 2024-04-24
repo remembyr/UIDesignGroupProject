@@ -24,20 +24,11 @@ const CarbsQualityModal = () => {
                 Look for...
               </p>
               <ul className="ml-4 mt-0 list-disc text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
-                <li>nuts and seeds</li>
+                <li>unprocessed, complex carbs</li>
                 <ul className="ml-4 list-square text-xl leading-relaxed text-gray-400 dark:text-gray-400">
-                  <li>walnuts</li>
-                  <li>chia seeds</li>
-                </ul>
-                <li>fish</li>
-                <ul className="ml-4 list-square text-xl leading-relaxed text-gray-400 dark:text-gray-400">
-                  <li>salmon</li>
-                  <li>trout</li>
-                </ul>
-                <li>vegetables</li>
-                <ul className="ml-4 list-square text-xl leading-relaxed text-gray-400 dark:text-gray-400">
-                  <li>avocado</li>
-                  <li>soybeans</li>
+                  <li>whole grains</li>
+                  <li>brown rice</li>
+                  <li>vegetables</li>
                 </ul>
               </ul>
             </div>
@@ -46,16 +37,12 @@ const CarbsQualityModal = () => {
                 Avoid or limit...
               </p>
               <ul className="ml-4 mt-0 list-disc text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
-                <li>trans fats</li>
+                <li>processed, simple carbs</li>
                 <ul className="ml-4 list-square text-xl leading-relaxed text-gray-400 dark:text-gray-400">
-                  <li>fried food</li>
-                  <li>commercial baked goods</li>
-                </ul>
-                <li>saturated fats</li>
-                <ul className="ml-4 list-square text-xl leading-relaxed text-gray-400 dark:text-gray-400">
-                  <li>processed meat</li>
-                  <li>butter</li>
-                  <li>pastries</li>
+                  <li>white bread</li>
+                  <li>high sugar sodas</li>
+                  <li>candy</li>
+                  <li>white rice</li>
                 </ul>
               </ul>
             </div>
@@ -73,13 +60,3 @@ const CarbsQualityModal = () => {
 };
 
 export default CarbsQualityModal;
-
-/*
-
-Bad, processed carbs are stripped of their nutrients and absorbed quickly into the bloodstream,
-              causing blood sugar to spike. Bad carbs include things like white bread and sodas that are high on sugar.
-              <br /><br />
-              Good carbs are not processed, and have complex nutrient structures that help your digestive system
-              properly break them down. These include whole grains, brown rice, and vegetables!
-
-              */

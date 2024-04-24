@@ -22,7 +22,7 @@ const CarbsSortingGameSource: React.FC = () => {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("http://127.0.0.1:5000/get_fats");
+      const res = await fetch("http://127.0.0.1:5000/get_carbs");
       const data = await res.json();
 
       console.log(data);
@@ -36,7 +36,7 @@ const CarbsSortingGameSource: React.FC = () => {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
-    const req = await fetch("http://127.0.0.1:5000/check_fats_source", {
+    const req = await fetch("http://127.0.0.1:5000/check_carbs_source", {
       method: "POST",
       body: JSON.stringify({ userAnswer: userChoices }),
       headers: {

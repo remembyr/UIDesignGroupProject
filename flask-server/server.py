@@ -33,6 +33,23 @@ proteinQuality = [
     {"name": 'Chickpeas', "imgURL": 'https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/04/chickpeas_closeup_1296x728_header-1024x575.jpg?w=1155&h=1528'},
 ]
 
+carbs = [
+    {"name": 'Cheese Pizza', "imgURL": 'https://hips.hearstapps.com/hmg-prod/images/classic-cheese-pizza-recipe-2-64429a0cb408b.jpg?crop=0.8888888888888888xw:1xh;center,top&resize=1200:*'},
+    {"name": 'Fac House Salmon', "imgURL": 'https://www.onceuponachef.com/images/2018/02/pan-seared-salmon-.jpg'},
+    {"name": 'Salad', "imgURL": 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/12/20/0/FNK_Caesar-Salad_H_s4x3.jpg.rend.hgtvcom.1280.720.suffix/1576855535377.jpeg'},
+    {"name": 'Quinoa', "imgURL": 'https://images.immediate.co.uk/production/volatile/sites/30/2022/05/Quinoa-707f5e8.png?resize=768,574'},
+    {"name": 'Soda', "imgURL": 'https://i.redd.it/yyr6vtruhzbb1.jpg'},
+]
+
+carbsQuality = [
+    {"name": 'Cous Cous', "imgURL": 'https://emilybites.com/wp-content/uploads/2022/07/Mediterranean-Couscous-Salad-5b-500x375.jpg'},
+    {"name": 'Cheese Pizza', "imgURL": 'https://hips.hearstapps.com/hmg-prod/images/classic-cheese-pizza-recipe-2-64429a0cb408b.jpg?crop=0.8888888888888888xw:1xh;center,top&resize=1200:*'},
+    {"name": 'Apples', "imgURL": 'https://www.foodandwine.com/thmb/h7XBIk5uparmVpDEyQ9oC7brCpA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/A-Feast-of-Apples-FT-2-MAG1123-980271d42b1a489bab239b1466588ca4.jpg'},
+    {"name": 'French Fries', "imgURL": 'https://kentrollins.com/wp-content/uploads/2021/12/featured-fries-scaled.jpeg'},
+    {"name": 'Fruity Pebbles', "imgURL": 'https://m.media-amazon.com/images/I/81O4DMIkqIL.jpg'},
+
+]
+
 fats = [
     {"name": 'Almonds', "imgURL": 'https://images.immediate.co.uk/production/volatile/sites/30/2021/02/almonds-9e25ce7.jpg?quality=90&resize=556,505'},
     {"name": 'Cheese Pizza', "imgURL": 'https://hips.hearstapps.com/hmg-prod/images/classic-cheese-pizza-recipe-2-64429a0cb408b.jpg?crop=0.8888888888888888xw:1xh;center,top&resize=1200:*'},
@@ -95,6 +112,34 @@ def check_protein_source():
 @app.route('/check_protein_quality', methods=['GET', 'POST'])
 def check_protein_quality():
     correctAnswer = sorted(['Red Lentil Dahl', 'Fac House Salmon', 'Chickpeas'])
+    req = request.get_json()
+    userAnswer = sorted(req['userAnswer'])
+
+    isCorrect = correctAnswer == userAnswer
+
+    return jsonify(isCorrect=isCorrect)
+
+@app.route("/get_carbs", methods=['GET', 'POST'])
+def get_carbs():
+    return jsonify(carbs)
+
+@app.route("/get_carbs_quality", methods=['GET', 'POST'])
+def get_carbs_quality():
+    return jsonify(carbsQuality)
+
+@app.route('/check_carbs_source', methods=['GET', 'POST'])
+def check_carbs_source():
+   correctAnswer = sorted(['Cheese Pizza', 'Salad', 'Quinoa', 'Soda'])
+   req = request.get_json()
+   userAnswer = sorted(req['userAnswer'])
+   
+   isCorrect = correctAnswer == userAnswer
+   
+   return jsonify(isCorrect=isCorrect)
+
+@app.route('/check_carbs_quality', methods=['GET', 'POST'])
+def check_carbs_quality():
+    correctAnswer = sorted(['Cous Cous', 'Apples'])
     req = request.get_json()
     userAnswer = sorted(req['userAnswer'])
 

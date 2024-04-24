@@ -27,7 +27,7 @@ function CarbsGoodBadSource() {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("http://127.0.0.1:5000/get_fats_quality");
+      const res = await fetch("http://127.0.0.1:5000/get_carbs_quality");
       const data = await res.json();
 
       console.log(data);
@@ -41,7 +41,7 @@ function CarbsGoodBadSource() {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
-    const req = await fetch("http://127.0.0.1:5000/check_fats_quality", {
+    const req = await fetch("http://127.0.0.1:5000/check_carbs_quality", {
       method: "POST",
       body: JSON.stringify({ userAnswer: goodUserChoices }),
       headers: {
@@ -112,7 +112,7 @@ function CarbsGoodBadSource() {
             <GoodBadSortingPlate
               onDropGood={handleDropGood}
               onDropBad={handleDropBad}
-              macro="Fat"
+              macro="Carb"
               goodFoods={goodUserChoices}
               badFoods={badUserChoices}
             />

@@ -43,7 +43,7 @@ export function ProteinQualityModal() {
             </div>
             <div className="space-y-6">
               <p className="mb-0 text-3xl leading-relaxed text-gray-500 dark:text-gray-400">
-                Avoid...
+                Avoid or limit...
               </p>
               <ul className="ml-4 mt-0 list-disc text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
                 <li>red meats</li>
