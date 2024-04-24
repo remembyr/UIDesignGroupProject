@@ -27,7 +27,7 @@ function FatsGoodBadSource() {
 
   useEffect(() => {
     async function getFoods() {
-      const res = await fetch("http://127.0.0.1:5000/get_foods");
+      const res = await fetch("http://127.0.0.1:5000/get_fats_quality");
       const data = await res.json();
 
       console.log(data);
@@ -41,7 +41,7 @@ function FatsGoodBadSource() {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
-    const req = await fetch("http://127.0.0.1:5000/check_protein_quality", {
+    const req = await fetch("http://127.0.0.1:5000/check_fats_quality", {
       method: "POST",
       body: JSON.stringify({ userAnswer: goodUserChoices }),
       headers: {
@@ -65,7 +65,7 @@ function FatsGoodBadSource() {
   async function updateUserProgress() {
     const res = await fetch("http://127.0.0.1:5000/get_user");
     let data = await res.json();
-    data.completedProtein = true;
+    data.completedFats = true;
     console.log(data);
 
     const req = await fetch("http://127.0.0.1:5000/update_user", {
