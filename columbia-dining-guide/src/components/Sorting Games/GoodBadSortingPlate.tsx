@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'flowbite-react';
-import FoodEntry from './FoodEntry';
+import FoodEntry from '../FoodEntry';
 
 interface GoodBadSortingPlateProps {
   onDropGood: (event: React.DragEvent<HTMLDivElement>) => void;

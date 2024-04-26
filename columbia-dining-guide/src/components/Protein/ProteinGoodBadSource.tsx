@@ -8,7 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { ProteinModal } from "./ProteinModal";
 import { ProteinQualityModal } from "./ProteinQualityModal";
-import GoodBadSortingPlate from "../GoodBadSortingPlate";
+import FailModal from "../Sorting Games/FailModal";
+import PassModal from "../Sorting Games/PassModal";
+import { usePassModal } from "../../contexts/PassModalContext";
+import { useFailModal } from "../../contexts/FailModalContext";
+import GoodBadSortingPlate from "../Sorting Games/GoodBadSortingPlate";
 import FoodList from "../FoodList";
 
 interface Food {
@@ -19,6 +23,9 @@ interface Food {
 function ProteinGoodBadSource() {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const { isFailModalOpen, setFailModalOpen } = useFailModal();
+  const { isPassModalOpen, setPassModalOpen } = usePassModal();
+  const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
   const [goodUserChoices, setGoodUserChoices] = useState<String[]>([]);
@@ -50,12 +57,11 @@ function ProteinGoodBadSource() {
     });
     let res = await req.json();
     if (res.isCorrect) {
-      alert("Great work, you got it all correct!");
+      setPassModalOpen(false);
       updateUserProgress();
-      setModalOpen(false);
-      navigate("/learn/macros");
     } else {
-      alert("Something's amiss...try again!");
+      setNumAway(res.numAway);
+      setFailModalOpen(false);
       setBadUserChoices([]);
       setGoodUserChoices([]);
       setForceUpdate(forceUpdate + 1);
@@ -106,6 +112,10 @@ function ProteinGoodBadSource() {
   return (
     <>
       <ProteinQualityModal />
+      <PassModal description="Plant-based proteins, such as chickpeas or lentil dishes, are a great option! So is salmon, which is high in protein and heart-healthy fat."
+        nextURL="/learn/macros"/>
+      <FailModal description="Remember that red meats and heavily processed meats can raise cholesterol. Try to gravitate towards lean meats,
+       fish, or protein from plants." numAway={numAway}/>
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>

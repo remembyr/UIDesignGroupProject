@@ -68,6 +68,19 @@ fatsQuality = [
 
 ]
 
+def checkNumAway(correctAnswer, userAnswer, isCorrect):
+    if not isCorrect:
+        correct_set = set(correctAnswer)
+        user_set = set(userAnswer)
+
+        incorrect_elements = list(correct_set.symmetric_difference(user_set))
+        
+        num_away = len(incorrect_elements)
+    else:
+       num_away = 0
+    
+    return num_away
+
 #User API Route
 @app.route("/get_user", methods=['GET', 'POST'])
 def get_user():
@@ -106,8 +119,11 @@ def check_protein_source():
    userAnswer = sorted(req['userAnswer'])
    
    isCorrect = correctAnswer == userAnswer
+   num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
+       
+   return jsonify(isCorrect=isCorrect, numAway=num_away)
+
    
-   return jsonify(isCorrect=isCorrect)
 
 @app.route('/check_protein_quality', methods=['GET', 'POST'])
 def check_protein_quality():
@@ -116,8 +132,9 @@ def check_protein_quality():
     userAnswer = sorted(req['userAnswer'])
 
     isCorrect = correctAnswer == userAnswer
+    num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
 
-    return jsonify(isCorrect=isCorrect)
+    return jsonify(isCorrect=isCorrect, numAway=num_away)
 
 @app.route("/get_carbs", methods=['GET', 'POST'])
 def get_carbs():
@@ -134,8 +151,9 @@ def check_carbs_source():
    userAnswer = sorted(req['userAnswer'])
    
    isCorrect = correctAnswer == userAnswer
+   num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
    
-   return jsonify(isCorrect=isCorrect)
+   return jsonify(isCorrect=isCorrect, numAway=num_away)
 
 @app.route('/check_carbs_quality', methods=['GET', 'POST'])
 def check_carbs_quality():
@@ -144,8 +162,9 @@ def check_carbs_quality():
     userAnswer = sorted(req['userAnswer'])
 
     isCorrect = correctAnswer == userAnswer
+    num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
 
-    return jsonify(isCorrect=isCorrect)
+    return jsonify(isCorrect=isCorrect, numAway=num_away)
 
 
 @app.route("/get_fats", methods=['GET', 'POST'])
@@ -163,8 +182,9 @@ def check_fats_source():
     userAnswer = sorted(req['userAnswer'])
 
     isCorrect = correctAnswer == userAnswer
+    num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
 
-    return jsonify(isCorrect=isCorrect)
+    return jsonify(isCorrect=isCorrect, numAway=num_away)
 
 @app.route('/check_fats_quality', methods=['GET', 'POST'])
 def check_fats_quality():
@@ -173,8 +193,9 @@ def check_fats_quality():
     userAnswer = sorted(req['userAnswer'])
 
     isCorrect = correctAnswer == userAnswer
+    num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
 
-    return jsonify(isCorrect=isCorrect)
+    return jsonify(isCorrect=isCorrect, numAway=num_away)
 
 if __name__ == "__main__":
     app.run(debug=True)

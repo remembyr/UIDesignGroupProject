@@ -5,7 +5,11 @@ import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { ProteinModal } from "./ProteinModal";
-import SortingPlate from "../SortingPlate";
+import FailModal from "../Sorting Games/FailModal";
+import PassModal from "../Sorting Games/PassModal";
+import { usePassModal } from "../../contexts/PassModalContext";
+import { useFailModal } from "../../contexts/FailModalContext";
+import SortingPlate from "../Sorting Games/SortingPlate";
 
 interface Food {
   name: string;
@@ -15,6 +19,9 @@ interface Food {
 const ProteinSortingGameSource: React.FC = () => {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const { isFailModalOpen, setFailModalOpen } = useFailModal();
+  const { isPassModalOpen, setPassModalOpen } = usePassModal();
+  const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
   const [userChoices, setUserChoices] = useState<String[]>([]);
@@ -45,11 +52,10 @@ const ProteinSortingGameSource: React.FC = () => {
     });
     let res = await req.json();
     if (res.isCorrect) {
-      alert("Great work, you got it all correct!");
-      setModalOpen(false);
-      navigate("/learn/protein-quality");
+      setPassModalOpen(false);
     } else {
-      alert("Something's amiss...try again!");
+      setNumAway(res.numAway);
+      setFailModalOpen(false);
       setUserChoices([]);
       setForceUpdate(forceUpdate + 1);
     }
@@ -72,6 +78,11 @@ const ProteinSortingGameSource: React.FC = () => {
   return (
     <>
       <ProteinModal />
+      <PassModal description="Red lentil dahl, steak, and chickpeas are all great examples of foods with high protein content."
+        nextURL="/learn/protein-quality"/>
+      <FailModal description="Remember that proteins are typically found in animal products like meat, fish,
+                and eggs, as well as in plant-based sources such as beans,
+                lentils, and nuts." numAway={numAway}/>
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">

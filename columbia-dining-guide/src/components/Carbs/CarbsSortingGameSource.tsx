@@ -5,7 +5,7 @@ import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { CarbsModal } from "./CarbsModal";
-import SortingPlate from "../SortingPlate";
+import SortingPlate from "../Sorting Games/SortingPlate";
 
 interface Food {
   name: string;

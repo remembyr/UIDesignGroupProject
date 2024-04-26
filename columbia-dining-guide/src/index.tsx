@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ModalProvider } from "./contexts/ModalContext";
+import { FailModalProvider } from "./contexts/FailModalContext";
+import { PassModalProvider } from "./contexts/PassModalContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -13,7 +15,11 @@ root.render(
   <React.StrictMode>
     <Router>
       <ModalProvider>
-        <App />
+        <FailModalProvider>
+          <PassModalProvider>
+            <App />
+          </PassModalProvider>
+        </FailModalProvider>
       </ModalProvider>
     </Router>
   </React.StrictMode>,

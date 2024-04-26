@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { FatsModal } from "./FatsModal";
 import FatsQualityModal from "./FatsQualityModal";
-import GoodBadSortingPlate from "../GoodBadSortingPlate";
+import GoodBadSortingPlate from "../Sorting Games/GoodBadSortingPlate";
 import FoodList from "../FoodList";
 
 interface Food {
