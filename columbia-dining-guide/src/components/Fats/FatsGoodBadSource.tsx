@@ -28,8 +28,8 @@ function FatsGoodBadSource() {
   const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
-  const [goodUserChoices, setGoodUserChoices] = useState<String[]>([]);
-  const [badUserChoices, setBadUserChoices] = useState<String[]>([]);
+  const [goodUserChoices, setGoodUserChoices] = useState<Food[]>([]);
+  const [badUserChoices, setBadUserChoices] = useState<Food[]>([]);
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
@@ -48,9 +48,10 @@ function FatsGoodBadSource() {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
+    const userAnswer = goodUserChoices.map((choice) => choice.name);
     const req = await fetch("http://127.0.0.1:5000/check_fats_quality", {
       method: "POST",
-      body: JSON.stringify({ userAnswer: goodUserChoices }),
+      body: JSON.stringify({ userAnswer: userAnswer }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -86,36 +87,69 @@ function FatsGoodBadSource() {
   }
 
   const handleDropGood = (event: React.DragEvent<HTMLDivElement>) => {
-    const foodType = event.dataTransfer.getData("text/plain");
+    const dataString = event.dataTransfer.getData("application/json");
+    const { name, imgURL } = JSON.parse(dataString);
     const updatedFoods = foods.filter((food) => {
-      return food.name !== foodType;
+      return food.name !== name;
     });
     setFoods(updatedFoods);
 
-    const updatedGoodUserChoices: String[] = goodUserChoices;
-    updatedGoodUserChoices.push(foodType);
+    const updatedGoodUserChoices = [
+      ...goodUserChoices,
+      { name: name, imgURL: imgURL },
+    ];
     setGoodUserChoices(updatedGoodUserChoices);
   };
 
   const handleDropBad = (event: React.DragEvent<HTMLDivElement>) => {
-    const foodType = event.dataTransfer.getData("text/plain");
+    const dataString = event.dataTransfer.getData("application/json");
+    const { name, imgURL } = JSON.parse(dataString);
     const updatedFoods = foods.filter((food) => {
-      return food.name !== foodType;
+      return food.name !== name;
     });
     setFoods(updatedFoods);
 
-    const updatedBadUserChoices: String[] = badUserChoices;
-    updatedBadUserChoices.push(foodType);
+    const updatedBadUserChoices = [
+      ...badUserChoices,
+      { name: name, imgURL: imgURL },
+    ];
     setBadUserChoices(updatedBadUserChoices);
+  };
+
+  const removeFromPlateGood = (food: string) => {
+    const removedFood = goodUserChoices.find((item) => item.name === food);
+    if (!removedFood) return;
+
+    const updatedGoodUserChoices = goodUserChoices.filter(
+      (item) => item.name !== food,
+    );
+    setGoodUserChoices(updatedGoodUserChoices);
+    setFoods([...foods, removedFood]);
+  };
+
+  const removeFromPlateBad = (food: string) => {
+    const removedFood = badUserChoices.find((item) => item.name === food);
+    if (!removedFood) return;
+
+    const updatedBadUserChoices = badUserChoices.filter(
+      (item) => item.name !== food,
+    );
+    setBadUserChoices(updatedBadUserChoices);
+    setFoods([...foods, removedFood]);
   };
 
   return (
     <>
       <FatsQualityModal />
-      <PassModal description="The avocado in guacamole provides is a great source of healthy fat. Salmon and almonds are also great options for unsaturated fat!"
-        nextURL="/learn/macros"/>
-      <FailModal description="Remember that healthy, unsaturated fats can be found in nuts, seeds, fish, and avocados. 
-      Try to stay away from trans fats in fried food and saturated fats in red meat and dairy products." numAway={numAway}/>
+      <PassModal
+        description="The avocado in guacamole provides is a great source of healthy fat. Salmon and almonds are also great options for unsaturated fat!"
+        nextURL="/learn/macros"
+      />
+      <FailModal
+        description="Remember that healthy, unsaturated fats can be found in nuts, seeds, fish, and avocados. 
+      Try to stay away from trans fats in fried food and saturated fats in red meat and dairy products."
+        numAway={numAway}
+      />
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>
@@ -125,6 +159,8 @@ function FatsGoodBadSource() {
               macro="Fat"
               goodFoods={goodUserChoices}
               badFoods={badUserChoices}
+              removeFromPlateGood={removeFromPlateGood}
+              removeFromPlateBad={removeFromPlateBad}
             />
           </div>
           <div>
