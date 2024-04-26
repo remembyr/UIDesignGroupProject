@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { FatsModal } from "./FatsModal";
 import FatsQualityModal from "./FatsQualityModal";
+import FailModal from "../Sorting Games/FailModal";
+import PassModal from "../Sorting Games/PassModal";
+import { usePassModal } from "../../contexts/PassModalContext";
+import { useFailModal } from "../../contexts/FailModalContext";
 import GoodBadSortingPlate from "../Sorting Games/GoodBadSortingPlate";
 import FoodList from "../FoodList";
 
@@ -19,6 +23,9 @@ interface Food {
 function FatsGoodBadSource() {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const { isFailModalOpen, setFailModalOpen } = useFailModal();
+  const { isPassModalOpen, setPassModalOpen } = usePassModal();
+  const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
   const [goodUserChoices, setGoodUserChoices] = useState<String[]>([]);
@@ -50,12 +57,11 @@ function FatsGoodBadSource() {
     });
     let res = await req.json();
     if (res.isCorrect) {
-      alert("Great work, you got it all correct!");
+      setPassModalOpen(false);
       updateUserProgress();
-      setModalOpen(false);
-      navigate("/learn/macros");
     } else {
-      alert("Something's amiss...try again!");
+      setNumAway(res.numAway);
+      setFailModalOpen(false);
       setBadUserChoices([]);
       setGoodUserChoices([]);
       setForceUpdate(forceUpdate + 1);
@@ -106,6 +112,10 @@ function FatsGoodBadSource() {
   return (
     <>
       <FatsQualityModal />
+      <PassModal description="The avocado in guacamole provides is a great source of healthy fat. Salmon and almonds are also great options for unsaturated fat!"
+        nextURL="/learn/macros"/>
+      <FailModal description="Remember that healthy, unsaturated fats can be found in nuts, seeds, fish, and avocados. 
+      Try to stay away from trans fats in fried food and saturated fats in red meat and dairy products." numAway={numAway}/>
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>

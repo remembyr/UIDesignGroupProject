@@ -5,6 +5,10 @@ import FoodList from "../FoodList";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { CarbsModal } from "./CarbsModal";
+import FailModal from "../Sorting Games/FailModal";
+import PassModal from "../Sorting Games/PassModal";
+import { usePassModal } from "../../contexts/PassModalContext";
+import { useFailModal } from "../../contexts/FailModalContext";
 import SortingPlate from "../Sorting Games/SortingPlate";
 
 interface Food {
@@ -15,6 +19,9 @@ interface Food {
 const CarbsSortingGameSource: React.FC = () => {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const { isFailModalOpen, setFailModalOpen } = useFailModal();
+  const { isPassModalOpen, setPassModalOpen } = usePassModal();
+  const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
   const [userChoices, setUserChoices] = useState<String[]>([]);
@@ -45,11 +52,10 @@ const CarbsSortingGameSource: React.FC = () => {
     });
     let res = await req.json();
     if (res.isCorrect) {
-      alert("Great work, you got it all correct!");
-      setModalOpen(false);
-      navigate("/learn/carbs-quality");
+      setPassModalOpen(false);
     } else {
-      alert("Something's amiss...try again!");
+      setNumAway(res.numAway);
+      setFailModalOpen(false);
       setUserChoices([]);
       setForceUpdate(forceUpdate + 1);
     }
@@ -72,6 +78,9 @@ const CarbsSortingGameSource: React.FC = () => {
   return (
     <>
       <CarbsModal />
+      <PassModal description="Cheese pizza, salad, quinoa, and soda are all great examples of foods high in carbohydrates."
+        nextURL="/learn/carbs-quality"/>
+      <FailModal description="Remember that carbohydrates are found in foods like fruits, vegetables, breads, pastas, and grains." numAway={numAway}/>
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">

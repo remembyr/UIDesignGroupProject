@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../contexts/ModalContext";
 import { CarbsModal } from "./CarbsModal";
 import CarbsQualityModal from "./CarbsQualityModal";
+import FailModal from "../Sorting Games/FailModal";
+import PassModal from "../Sorting Games/PassModal";
+import { usePassModal } from "../../contexts/PassModalContext";
+import { useFailModal } from "../../contexts/FailModalContext";
 import GoodBadSortingPlate from "../Sorting Games/GoodBadSortingPlate";
 import FoodList from "../FoodList";
 
@@ -19,6 +23,9 @@ interface Food {
 function CarbsGoodBadSource() {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
+  const { isFailModalOpen, setFailModalOpen } = useFailModal();
+  const { isPassModalOpen, setPassModalOpen } = usePassModal();
+  const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
   const [goodUserChoices, setGoodUserChoices] = useState<String[]>([]);
@@ -50,12 +57,11 @@ function CarbsGoodBadSource() {
     });
     let res = await req.json();
     if (res.isCorrect) {
-      alert("Great work, you got it all correct!");
+      setPassModalOpen(false);
       updateUserProgress();
-      setModalOpen(false);
-      navigate("/learn/macros");
     } else {
-      alert("Something's amiss...try again!");
+      setNumAway(res.numAway);
+      setFailModalOpen(false);
       setBadUserChoices([]);
       setGoodUserChoices([]);
       setForceUpdate(forceUpdate + 1);
@@ -106,6 +112,10 @@ function CarbsGoodBadSource() {
   return (
     <>
       <CarbsQualityModal />
+      <PassModal description="Complex carbs like cous cous and apples are full of nutrients your body loves! Simple, 'bad' carbs should be eaten in moderation."
+        nextURL="/learn/macros"/>
+      <FailModal description="Remember that simple carbs are highly processed foods that are stripped of nutrients. They're often high in sugar, like white bread or soda. 
+      Try to gravitate towards complex carbs, like whole grains, brown rice, and vegetables." numAway={numAway}/>
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-20">
           <div>
