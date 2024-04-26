@@ -15,7 +15,7 @@ const CarbsQualityModal = () => {
         onClose={() => setModalOpen(false)}
       >
         <Modal.Header style={{ marginTop: 10 }} className="items-center p-4">
-          <h2>But not all carbs are good!</h2>
+          <h2>Watch out—not all carbs are good!</h2>
         </Modal.Header>
         <Modal.Body>
           <div className="grid max-w-5xl grid-cols-2 gap-10">

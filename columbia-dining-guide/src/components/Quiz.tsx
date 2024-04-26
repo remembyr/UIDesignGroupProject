@@ -7,6 +7,7 @@ import { useDrag } from 'react-dnd';
 import "./Plate/Plate.css";
 import React, { useState, useEffect } from 'react';
 import FoodList from "./FoodList";
+import { QuizModal } from "./QuizModal";
 
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../contexts/ModalContext";
@@ -159,6 +160,7 @@ export default function Quiz() {
 
     return (
         <div className="container" draggable={false}>
+            <QuizModal />
             <div className="row" draggable={false}>
                 <div className="col-md-6" draggable={false}>
 
