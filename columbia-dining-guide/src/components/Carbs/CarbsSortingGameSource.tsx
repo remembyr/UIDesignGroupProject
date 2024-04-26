@@ -87,7 +87,7 @@ const CarbsSortingGameSource: React.FC = () => {
           <div className="mr-6">
             <SortingPlate
               onDrop={handleDrop}
-              macro="fat"
+              macro="carb"
               foods={userChoices}
               removeFromPlate={removeFromPlate}
             />
