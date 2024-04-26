@@ -24,7 +24,7 @@ const ProteinSortingGameSource: React.FC = () => {
   const [numAway, setNumAway] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
-  const [userChoices, setUserChoices] = useState<String[]>([]);
+  const [userChoices, setUserChoices] = useState<Food[]>([]);
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
@@ -43,9 +43,10 @@ const ProteinSortingGameSource: React.FC = () => {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
+    const userAnswer = userChoices.map((choice) => choice.name);
     const req = await fetch("http://127.0.0.1:5000/check_protein_source", {
       method: "POST",
-      body: JSON.stringify({ userAnswer: userChoices }),
+      body: JSON.stringify({ userAnswer: userAnswer }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -62,27 +63,41 @@ const ProteinSortingGameSource: React.FC = () => {
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    const foodType = event.dataTransfer.getData("text/plain");
-    console.log(`Dropped ${foodType} onto the plate`);
+    const dataString = event.dataTransfer.getData("application/json");
+    const { name, imgURL } = JSON.parse(dataString);
+    console.log(`Dropped ${name} onto the plate`);
     const updatedFoods = foods.filter((food) => {
-      return food.name !== foodType;
+      return food.name !== name;
     });
     setFoods(updatedFoods);
 
-    const updatedUserChoices: String[] = userChoices;
-    updatedUserChoices.push(foodType);
+    const updatedUserChoices = [...userChoices, { name: name, imgURL: imgURL }];
     setUserChoices(updatedUserChoices);
     console.log(updatedUserChoices);
+  };
+
+  const removeFromPlate = (food: string) => {
+    const removedFood = userChoices.find((item) => item.name === food);
+    if (!removedFood) return;
+
+    const updatedUserChoices = userChoices.filter((item) => item.name !== food);
+    setUserChoices(updatedUserChoices);
+    setFoods([...foods, removedFood]);
   };
 
   return (
     <>
       <ProteinModal />
-      <PassModal description="Red lentil dahl, steak, and chickpeas are all great examples of foods with high protein content."
-        nextURL="/learn/protein-quality"/>
-      <FailModal description="Remember that proteins are typically found in animal products like meat, fish,
+      <PassModal
+        description="Red lentil dahl, steak, and chickpeas are all great examples of foods with high protein content."
+        nextURL="/learn/protein-quality"
+      />
+      <FailModal
+        description="Remember that proteins are typically found in animal products like meat, fish,
                 and eggs, as well as in plant-based sources such as beans,
-                lentils, and nuts." numAway={numAway}/>
+                lentils, and nuts."
+        numAway={numAway}
+      />
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
@@ -90,6 +105,7 @@ const ProteinSortingGameSource: React.FC = () => {
               onDrop={handleDrop}
               macro="protein"
               foods={userChoices}
+              removeFromPlate={removeFromPlate}
             />
           </div>
           <div className="ml-12">

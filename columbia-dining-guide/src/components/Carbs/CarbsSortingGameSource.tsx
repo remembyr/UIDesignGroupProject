@@ -17,7 +17,7 @@ const CarbsSortingGameSource: React.FC = () => {
   const { isModalOpen, setModalOpen } = useModal();
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
-  const [userChoices, setUserChoices] = useState<String[]>([]);
+  const [userChoices, setUserChoices] = useState<Food[]>([]);
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
@@ -36,9 +36,10 @@ const CarbsSortingGameSource: React.FC = () => {
   }, [forceUpdate]);
 
   const checkAnswer = async () => {
+    const userAnswer = userChoices.map((choice) => choice.name);
     const req = await fetch("http://127.0.0.1:5000/check_carbs_source", {
       method: "POST",
-      body: JSON.stringify({ userAnswer: userChoices }),
+      body: JSON.stringify({ userAnswer: userAnswer }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -56,17 +57,26 @@ const CarbsSortingGameSource: React.FC = () => {
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    const foodType = event.dataTransfer.getData("text/plain");
-    console.log(`Dropped ${foodType} onto the plate`);
+    const dataString = event.dataTransfer.getData("application/json");
+    const { name, imgURL } = JSON.parse(dataString);
+    console.log(`Dropped ${name} onto the plate`);
     const updatedFoods = foods.filter((food) => {
-      return food.name !== foodType;
+      return food.name !== name;
     });
     setFoods(updatedFoods);
 
-    const updatedUserChoices: String[] = userChoices;
-    updatedUserChoices.push(foodType);
+    const updatedUserChoices = [...userChoices, { name: name, imgURL: imgURL }];
     setUserChoices(updatedUserChoices);
     console.log(updatedUserChoices);
+  };
+
+  const removeFromPlate = (food: string) => {
+    const removedFood = userChoices.find((item) => item.name === food);
+    if (!removedFood) return;
+
+    const updatedUserChoices = userChoices.filter((item) => item.name !== food);
+    setUserChoices(updatedUserChoices);
+    setFoods([...foods, removedFood]);
   };
 
   return (
@@ -77,8 +87,9 @@ const CarbsSortingGameSource: React.FC = () => {
           <div className="mr-6">
             <SortingPlate
               onDrop={handleDrop}
-              macro="carb"
+              macro="fat"
               foods={userChoices}
+              removeFromPlate={removeFromPlate}
             />
           </div>
           <div className="ml-12">
