@@ -40,6 +40,10 @@
     transform: rotate(15deg);
 }
 
+#submit-button {
+    margin-top: 30px;
+}
+
 
 .non-select {
     user-select: none;
@@ -47,16 +51,18 @@
 
 #meal-50-x {
     display: inline;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 40px;
     text-align: center;
+    box-sizing: border-box;
     margin-left: 20px;
+    padding: 0;
 }
 
 #meal-20-x {
     display: inline;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 40px;
     text-align: center;
     margin-left: 20px;
 }
@@ -64,8 +70,8 @@
 
 #meal-30-x {
     display: inline;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 40px;
     text-align: center;
     margin-left: 20px;
 }
@@ -73,4 +79,22 @@
 
 .plate-label {
     display: inline-block;
+}
+
+/* plate styling */
+
+.pie-chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+  
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 50%, 100% 50%, 100% 0%);
+    transform-origin: 50% 50%;
 }

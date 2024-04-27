@@ -4,7 +4,11 @@
 import { Button } from "flowbite-react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDrag } from 'react-dnd';
+// import Plate from "./Plate/Plate";
 import "./Plate/Plate.css";
+import { PieChart } from '@mui/x-charts/PieChart';
+
+
 import React, { useState, useEffect } from 'react';
 import FoodList from "./FoodList";
 import { QuizModal } from "./QuizModal";
@@ -27,17 +31,12 @@ let currentPlate:  { [key: string]: any } = {
 };
 
 
+
+
 export default function Quiz() {
     const [fiftyPercentMeal, setFifty] = useState(""); // carbs
     const [twentyPercentMeal, setTwenty] = useState(""); // fats
     const [thirtyPercentMeal, setThirty] = useState(""); // protein
-
-    // store dishes here
-    // let currentPlate:  { [key: string]: any } = {
-    //     "50%": [],
-    //     "20%": [],
-    //     "30%": []
-    // };
 
     const navigate = useNavigate();
     const { isModalOpen, setModalOpen } = useModal();
@@ -50,7 +49,6 @@ export default function Quiz() {
         const res = await fetch("/get_foods");
         const data = await res.json();
 
-        // console.log(data)
         setFoods(data);
         setIsLoading(false);
         }
@@ -59,6 +57,8 @@ export default function Quiz() {
         getFoods();
         }, 2000);
     }, []);
+
+   
 
 
     // dish draged
@@ -148,21 +148,20 @@ export default function Quiz() {
     }
 
     const handleSubmission = () => {
-
         // post meal submission to database
         const allMeals = [].concat(...Object.values(currentPlate));
         console.log(allMeals)
 
+        
 
         navigate('../quiz/results') // move to results page
     }
-
 
     return (
         <div className="container" draggable={false}>
             <QuizModal />
             <div className="row" draggable={false}>
-                <div className="col-md-6" draggable={false}>
+                <div className="col-md-6 left-column" draggable={false}>
 
                     {/* <div draggable={false}>
                         Fat: []%;
@@ -170,9 +169,10 @@ export default function Quiz() {
                         Carbs: []%;
                     </div> */}
 
-                    Plate:
+                    {/* Plate: */}
+
                     {/* virtual plate */}
-                    <div draggable={false}>
+                    {/* <div draggable={false}>
                         <div id="circle" draggable={false}>
                             <div onDragOver={enableDropping} 
                                  onDrop={handleDrop}
@@ -183,44 +183,61 @@ export default function Quiz() {
                                  onDragStart={handleDragStartBox}
                                  onDrop={handleDrop}
                                  draggable={false}
-                                 id="percent20-segment" >20%</div>
+                                 id="percent20-segment">20%</div>
                             <div onDragOver={enableDropping}
                                  onDragStart={handleDragStartBox}
                                  onDrop={handleDrop}
                                  draggable={false}
-                                 id="percent30-segment" >30%</div>
+                                 id="percent30-segment">30%</div>
                         </div>
-                    </div>
+                    </div> */}
+
+                    
+                    {/* <Plate slice1Percentage={30} slice2Percentage={50} slice3Percentage={20} /> */}
+
+                    <PieChart
+                        colors={['gray', 'gray', 'gray']}
+                        series={[
+                            {
+                            data: [
+                                { id: 0, value: 50, label: 'series A' },
+                                { id: 1, value: 30, label: 'series B' },
+                                { id: 2, value: 20, label: 'series C' },
+                            ],
+                            },
+                        ]}
+                        width={400}
+                        height={200}
+                    >hello</PieChart>
+
+
 
                     <div id="meals-info">
-                        {/* 50 */}
+                        {/* 50 (carbs) */}
                         <div>
                             <p className="plate-label">50%: {fiftyPercentMeal}</p>
                             <Button id="meal-50-x" color={"blue"} onClick={handleMeal}>X</Button>
                         </div>
                         
-                        {/* 30 */}
+                        {/* 30 (protein) */}
                         <div>
                             <p className="plate-label">30%: {thirtyPercentMeal}</p>
                             <Button id="meal-30-x" color={"blue"} onClick={handleMeal}>X</Button>
                         </div>
                        
-                        {/* 20 */}
+                        {/* 20 (fat) */}
                         <div>
                             <p className="plate-label">20%: {twentyPercentMeal}</p>
                             <Button id="meal-20-x" color={"blue"} onClick={handleMeal}>X</Button>
                         </div>
-                        
-
-
                     </div>
 
                 </div>
-                <div className="col-md-6">
-                    <p className="non-select">Meals:</p>
+                <div className="col-md-6 right-column">
+                    <p className="non-select font-semibold text-xl mt-3">Meals:</p>
                     <FoodList isLoading={isLoading} foods={foods}/>
 
-                    <Button color={"blue"} onClick={handleSubmission} className={"font-normal"} outline>Submit</Button>
+                    <Button color={"blue"} onClick={handleSubmission} className="font-normal mb-[1.875rem]" id="submit-button" outline>Submit</Button>
                 </div>
 
             </div>

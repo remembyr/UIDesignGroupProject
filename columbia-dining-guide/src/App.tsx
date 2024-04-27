@@ -24,7 +24,7 @@ import FatsGoodBadSource from "./components/Fats/FatsGoodBadSource";
 
 function App() {
   return (
-    <div className="bg-green-200">
+    <div className="bg-green-200 app-box">
       <SimpleNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
