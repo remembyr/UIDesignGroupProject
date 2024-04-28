@@ -34,7 +34,11 @@ const Breakdown = () => {
                 ready to make a balanced meal!
               </p>
               <div className="mt-16 flex justify-end">
-                <Button size="xl" onClick={() => navigate("/quiz")}>
+                <Button
+                  size="xl"
+                  onClick={() => navigate("/quiz")}
+                  style={{ backgroundColor: "#008901" }}
+                >
                   Quiz time!
                   <svg
                     className="size-6 pl-1 text-gray-800 dark:text-white"
