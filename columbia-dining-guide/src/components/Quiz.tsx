@@ -129,11 +129,8 @@ export default function Quiz() {
                 { name: name, imgURL: imgURL }
             )
             console.log(currentPlate)
-        }
-        
+        }   
     };
-
-    
 
 
     /* removing from plate */
@@ -206,7 +203,7 @@ export default function Quiz() {
                         Protein: []%;
                         Carbs: []%;
                     </div> */}
-
+                    
                     {/* Plate: */}
 
                     <MacroPlate

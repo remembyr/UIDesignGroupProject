@@ -2,7 +2,7 @@ import { useModal } from "../contexts/ModalContext";
 import { Card, Button, Modal } from "flowbite-react";
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-// import Plate from "./Plate/Plate";
+import MacroPlate from "./Plate/MacroPlate";
 import {useNavigate} from "react-router-dom";
 
 export default function QuizResults() {
