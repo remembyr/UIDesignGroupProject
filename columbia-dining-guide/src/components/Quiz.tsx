@@ -5,7 +5,6 @@ import { Button } from "flowbite-react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDrag } from 'react-dnd';
 import MacroPlate from "./Plate/MacroPlate";
-// import "./Plate/MacroPlate.css";
 import { PieChart } from '@mui/x-charts/PieChart';
 
 import React, { useState, useEffect } from 'react';
@@ -31,9 +30,6 @@ let currentPlate:  { [key: string]: any } = {
 
 
 export default function Quiz() {
-    // const [fiftyPercentMeal, setFifty] = useState(""); // carbs
-    // const [twentyPercentMeal, setTwenty] = useState(""); // fats
-    // const [thirtyPercentMeal, setThirty] = useState(""); // protein
 
     const navigate = useNavigate();
     const { isModalOpen, setModalOpen } = useModal();
@@ -43,8 +39,6 @@ export default function Quiz() {
     const [userChoices50Section, setUserChoices50Section] = useState<Food[]>([]);
     const [userChoices25TopSection, setUserChoices25TopSection] = useState<Food[]>([]);
     const [userChoices25BottomSection, setUserChoices25BottomSection] = useState<Food[]>([]);
-
-
 
     // request dishes from Flask database
     useEffect(() => {
@@ -156,9 +150,7 @@ export default function Quiz() {
         setFoods([...foods, removedFood]);
 
         currentPlate["50%"] = []
-
-
-        console.log(foods)
+        // console.log(foods)
     };
 
     const removeFromPlate25Top = (food: string) => {
@@ -172,8 +164,7 @@ export default function Quiz() {
         setFoods([...foods, removedFood]);
 
         currentPlate["25% top"] = []
-
-        console.log(currentPlate)
+        // console.log(currentPlate)
     };
 
 
@@ -188,14 +179,16 @@ export default function Quiz() {
         setFoods([...foods, removedFood]);
         
         currentPlate["25% bottom"] = []
-        console.log(currentPlate)
+        // console.log(currentPlate)
     };
 
 
     const handleSubmission = () => {
         // post meal submission to database
         const allMeals = [].concat(...Object.values(currentPlate));
-        console.log(allMeals)
+        // console.log(allMeals)
+
+        // handle dish-tribution calculation logic here:
 
         
 
@@ -235,13 +228,13 @@ export default function Quiz() {
                 </div>
 
                 <div className="col-md-6 right-column">
-                    <p className="non-select font-semibold text-xl mt-3">Meals:</p>
+                    <p className="select-none font-semibold text-xl mt-3">Meals:</p>
 
                     {/* loaded food list */}
                     <FoodList isLoading={isLoading} foods={foods}/>
 
                     {/* submit button */}
-                    <Button color={"blue"} onClick={handleSubmission} className="font-normal mb-[1.875rem] mt-[1.875rem]" id="submit-button" outline>Submit</Button>
+                    <Button color={"blue"} onClick={handleSubmission} className="font-normal my-[1.875rem]" id="submit-button" outline>Submit</Button>
                 </div>
 
             </div>
