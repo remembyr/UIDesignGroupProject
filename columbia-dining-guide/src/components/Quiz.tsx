@@ -183,12 +183,12 @@ export default function Quiz() {
     const handleSubmission = () => {
         // post meal submission to database
         const allMeals = [].concat(...Object.values(currentPlate));
-        // console.log(allMeals)
+        console.log(allMeals)
 
         // handle dish-tribution calculation logic here:
 
         
-
+        
         navigate('../quiz/results') // move to results page
     }
 
@@ -231,7 +231,7 @@ export default function Quiz() {
                     <FoodList isLoading={isLoading} foods={foods}/>
 
                     {/* submit button */}
-                    <Button color={"blue"} onClick={handleSubmission} className="font-normal my-[1.875rem]" id="submit-button" outline>Submit</Button>
+                    <Button color={"blue"} onClick={handleSubmission} className="font-normal my-[1.875rem] mb-[10rem]" id="submit-button" outline>Submit</Button>
                 </div>
 
             </div>
