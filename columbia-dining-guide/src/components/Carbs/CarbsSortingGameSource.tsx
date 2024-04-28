@@ -88,9 +88,14 @@ const CarbsSortingGameSource: React.FC = () => {
   return (
     <>
       <CarbsModal />
-      <PassModal description="Cheese pizza, salad, quinoa, and soda are all great examples of foods high in carbohydrates."
-        nextURL="/learn/carbs-quality"/>
-      <FailModal description="Remember that carbohydrates are found in foods like fruits, vegetables, breads, pastas, and grains." numAway={numAway}/>
+      <PassModal
+        description="Cheese pizza, salad, quinoa, and soda are all great examples of foods high in carbohydrates."
+        nextURL="/learn/carbs-quality"
+      />
+      <FailModal
+        description="Remember that carbohydrates are found in foods like fruits, vegetables, breads, pastas, and grains."
+        numAway={numAway}
+      />
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
@@ -110,7 +115,7 @@ const CarbsSortingGameSource: React.FC = () => {
             <Button
               className="mt-4"
               onClick={() => checkAnswer()}
-              style={{ backgroundColor: "#ff4500" }}
+              style={{ backgroundColor: "#008901" }}
             >
               Check Answer
             </Button>

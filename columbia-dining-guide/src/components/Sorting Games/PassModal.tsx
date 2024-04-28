@@ -5,11 +5,11 @@ import { usePassModal } from "../../contexts/PassModalContext";
 import { useModal } from "../../contexts/ModalContext";
 
 interface PassModalProps {
-    description: string;
-    nextURL: string;
+  description: string;
+  nextURL: string;
 }
 
-const PassModal: React.FC<PassModalProps> = ({description, nextURL}) => {
+const PassModal: React.FC<PassModalProps> = ({ description, nextURL }) => {
   const navigate = useNavigate();
   const { isPassModalOpen, setPassModalOpen } = usePassModal();
   const { isModalOpen, setModalOpen } = useModal();
@@ -26,20 +26,23 @@ const PassModal: React.FC<PassModalProps> = ({description, nextURL}) => {
           <h3>Great job!</h3>
         </Modal.Header>
         <Modal.Body>
-
-            <div className="space-y-6">
-              <p className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
-                {description}
-              </p>
-              <p className="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
-                Now press the continue button to keep learning!
-              </p>
-            </div>
+          <div className="space-y-6">
+            <p className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+              {description}
+            </p>
+            <p className="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+              Now press the continue button to keep learning!
+            </p>
+          </div>
         </Modal.Body>
         <Modal.Footer className="flex justify-end">
           <Button
-            onClick={() => {setPassModalOpen(true); navigate(nextURL); setModalOpen(false);}}
-            style={{ backgroundColor: "#ff4500" }}
+            onClick={() => {
+              setPassModalOpen(true);
+              navigate(nextURL);
+              setModalOpen(false);
+            }}
+            style={{ backgroundColor: "#008901" }}
           >
             Continue
           </Button>
@@ -47,6 +50,6 @@ const PassModal: React.FC<PassModalProps> = ({description, nextURL}) => {
       </Modal>
     </>
   );
-}
+};
 
 export default PassModal;

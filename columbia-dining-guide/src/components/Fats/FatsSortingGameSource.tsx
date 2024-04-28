@@ -88,9 +88,14 @@ const FatsSortingGameSource: React.FC = () => {
   return (
     <>
       <FatsModal />
-      <PassModal description="Almonds, cheese pizza, and french fries are all great examples of foods high in fat."
-        nextURL="/learn/fats-quality"/>
-      <FailModal description="Remember that fats are found in foods that contain oils, butter, cream, nuts, seeds, and fatty meats." numAway={numAway}/>
+      <PassModal
+        description="Almonds, cheese pizza, and french fries are all great examples of foods high in fat."
+        nextURL="/learn/fats-quality"
+      />
+      <FailModal
+        description="Remember that fats are found in foods that contain oils, butter, cream, nuts, seeds, and fatty meats."
+        numAway={numAway}
+      />
       <main className="flex min-h-screen items-center justify-center dark:bg-gray-800">
         <div className="grid max-w-6xl grid-cols-2 gap-4">
           <div className="mr-6">
@@ -110,7 +115,7 @@ const FatsSortingGameSource: React.FC = () => {
             <Button
               className="mt-4"
               onClick={() => checkAnswer()}
-              style={{ backgroundColor: "#ff4500" }}
+              style={{ backgroundColor: "#008901" }}
             >
               Check Answer
             </Button>

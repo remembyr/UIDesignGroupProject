@@ -17,7 +17,7 @@ function Home() {
           <Button
             onClick={() => navigate("/learn/macros")}
             className={"font-semibold"}
-            style={{ backgroundColor: "#ff4500" }}
+            style={{ backgroundColor: "#008901" }}
           >
             Start Learning
           </Button>

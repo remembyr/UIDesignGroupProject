@@ -31,10 +31,13 @@ export function QuizModal() {
             </div>
             <div className="space-y-6">
               <p className="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
-                One food will be given to you on the plate. It's your job to add more foods to balance out the meal!
+                One food will be given to you on the plate. It's your job to add
+                more foods to balance out the meal!
               </p>
               <p className="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
-                Remember the 50-30-20 rule! Try to make the plate 50% carbohydrates, 30% proteins, and 20% fats. If you can pass all three levels, you win!
+                Remember the 50-30-20 rule! Try to make the plate 50%
+                carbohydrates, 30% proteins, and 20% fats. If you can pass all
+                three levels, you win!
               </p>
             </div>
           </div>
@@ -42,7 +45,7 @@ export function QuizModal() {
         <Modal.Footer className="flex justify-end">
           <Button
             onClick={() => setModalOpen(true)}
-            style={{ backgroundColor: "#ff4500" }}
+            style={{ backgroundColor: "#008901" }}
           >
             Start Quiz
           </Button>

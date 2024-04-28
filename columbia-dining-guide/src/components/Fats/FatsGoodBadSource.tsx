@@ -173,7 +173,7 @@ function FatsGoodBadSource() {
               className="mt-4"
               onClick={() => checkAnswer()}
               disabled={foods.length > 0}
-              style={{ backgroundColor: "#ff4500" }}
+              style={{ backgroundColor: "#008901" }}
             >
               Check Answer
             </Button>

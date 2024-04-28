@@ -32,7 +32,7 @@ export function SimpleNavbar() {
         <Button
           className="m-2 rounded px-1 font-bold hover:bg-gray-700"
           onClick={() => navigate("/learn/macros")}
-          style={{ backgroundColor: "#ff4500" }}
+          style={{ backgroundColor: "#008901" }}
         >
           Learn
         </Button>

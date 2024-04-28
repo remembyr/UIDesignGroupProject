@@ -209,7 +209,7 @@ function MacroMenu() {
           {proteinProgress && carbProgress && fatProgress && (
             <Button
               onClick={() => navigate("/learn/breakdown")}
-              style={{ backgroundColor: "#ff4500" }}
+              style={{ backgroundColor: "#008901" }}
             >
               Continue
             </Button>

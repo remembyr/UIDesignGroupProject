@@ -117,7 +117,7 @@ const ProteinSortingGameSource: React.FC = () => {
             <Button
               className="mt-4"
               onClick={() => checkAnswer()}
-              style={{ backgroundColor: "#ff4500" }}
+              style={{ backgroundColor: "#008901" }}
             >
               Check Answer
             </Button>

@@ -70,7 +70,7 @@ export function ProteinQualityModal() {
           </Button>
           <Button
             onClick={() => setModalOpen(true)}
-            style={{ backgroundColor: "#ff4500" }}
+            style={{ backgroundColor: "#008901" }}
           >
             Play Sorting Game
           </Button>
