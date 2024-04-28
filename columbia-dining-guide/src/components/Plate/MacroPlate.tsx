@@ -70,10 +70,7 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
         onDragOver={handleDragOver}
       >
         <div>
-          {/* <span className="relative -right-10 top-16 text-xl font-semibold text-green-800">
-            Good {macro}s
-          </span> */}
-          <div className="relative right-5 top-20 text-right text-lg text-gray-600">
+          <div className="relative right-5 top-[12rem] text-right text-lg text-gray-600">
 
             {/* representation of individual dishes on plate */}
             {food50.map((food) => (
@@ -99,9 +96,6 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
           onDragOver={handleDragOver}
         >
           <div>
-            {/* <span className="relative -left-6 top-16 text-xl font-semibold text-red-800">
-              Bad {macro}s
-            </span> */}
             <div className="relative -left-6 top-20 text-lg text-gray-600">
               {food25_1.map((food) => (
                 <div className="bg-white rounded-2xl z-10 shadow-md p-[0.75rem] size-auto">
@@ -126,10 +120,7 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
           onDragOver={handleDragOver}
         >
           <div>
-            {/* <span className="relative -left-6 top-16 text-xl font-semibold text-red-800">
-              Bad {macro}s
-            </span> */}
-            <div className="relative -left-6 top-20 text-lg text-gray-600">
+            <div className="relative -left-6 top-[1.5rem] text-lg text-gray-600">
               {food25_2.map((food) => (
                 <div className="bg-white rounded-2xl z-10 shadow-md p-[0.75rem] size-auto">
                   <button className="relative top-0 right-0 hover:bg-blue-100 rounded-md px-[0.375rem]" onClick={() => removeFromPlate25Bottom(food.name)}>

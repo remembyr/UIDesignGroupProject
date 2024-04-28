@@ -187,9 +187,14 @@ export default function Quiz() {
 
         // handle dish-tribution calculation logic here:
 
+
+
+
         
-        
-        navigate('../quiz/results') // move to results page
+
+        if (allMeals.length == 3) {
+            navigate('../quiz/results') // move to results page
+        }
     }
 
     return (
