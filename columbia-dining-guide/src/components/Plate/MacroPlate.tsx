@@ -53,11 +53,6 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
     category: "50percent" | "25percent_top" | "25percent_bottom"
   ) => {
     event.preventDefault();
-    // if (category === "50percent") {
-    //   onDropGood(event);
-    // } else {
-    //   onDropBad(event);
-    // }
 
     if (category === "50percent") {
       onDrop50(event)
@@ -74,12 +69,11 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
 
   return (
     // <div className="grid grid-cols-2 gap-8">
-    <div className="grid grid-cols-2">
+    <div className="inline">
       {/* 50% Section */}
       <div
-        className="relative flex justify-center rounded-full bg-green-100 shadow-sm"
+        className="relative float-left flex justify-center rounded-full bg-green-100 shadow-sm"
         style={{ borderRadius: "250px 0 0 250px", width: "250px", height: "500px" }}
-        // style={{ borderRadius: "50% 0 0 50%", width: "50%", height: "100%" }}
         onDrop={(event) => handleDrop(event, "50percent")}
         onDragOver={handleDragOver}
       >
@@ -88,9 +82,12 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
             {/* Good {macro}s */}
           </span>
           <div className="relative -right-4 top-20 text-right text-lg text-gray-600">
+
+            {/* representation of individual dishes on plate */}
             {food50.map((food) => (
               <div>
-                {food.name}
+                {/* {food.name} */}
+                <p className="inline mr-[0.5rem]">{food.name}</p>
                 <button onClick={() => removeFromPlate50(food.name)}>
                   &#x2715;
                 </button>
@@ -101,7 +98,7 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
       </div>
 
       {/* two 25% Sections */}
-      <div> 
+      <div className=""> 
         <div
           className="relative flex justify-center rounded-full bg-red-100  shadow-sm"
           style={{ borderRadius: "0 250px 0 0", width: "250px", height: "250px" }}
@@ -115,7 +112,7 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
             <div className="relative -left-6 top-20 text-lg text-gray-600">
               {food25_1.map((food) => (
                 <div>
-                  {food.name}
+                  <p className="inline mr-[0.5rem]">{food.name}</p>
                   <button onClick={() => removeFromPlate25Top(food.name)}>
                     &#x2715;
                   </button>
@@ -139,7 +136,7 @@ const MacroPlate: React.FC<MacroPlateProps> = ({
             <div className="relative -left-6 top-20 text-lg text-gray-600">
               {food25_2.map((food) => (
                 <div>
-                  {food.name}
+                  <p className="inline mr-[0.5rem]">{food.name}</p>
                   <button onClick={() => removeFromPlate25Bottom(food.name)}>
                     &#x2715;
                   </button>
