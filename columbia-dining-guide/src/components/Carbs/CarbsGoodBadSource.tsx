@@ -151,7 +151,7 @@ function CarbsGoodBadSource() {
         numAway={numAway}
       />
       <main className="flex min-h-screen items-center justify-center gap-2 dark:bg-gray-800">
-        <div className="grid max-w-6xl grid-cols-2 gap-20">
+        <div className="grid max-w-7xl grid-cols-2 gap-20">
           <div>
             <GoodBadSortingPlate
               onDropGood={handleDropGood}

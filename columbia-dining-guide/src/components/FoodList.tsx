@@ -39,7 +39,7 @@ const FoodList: React.FC<FoodListProps> = ({ isLoading, foods }) => {
     return (
        <>
         <Card className='overflow-y-auto h-96 bg-gray-100'>
-            <div className="flex flex-col space-y-2 py-4 mt-96 mb-2">
+            <div className="flex flex-col space-y-2 h-full">
                 {foods.map((food) => (
                     <FoodEntry name={food.name} imgURL={food.imgURL} draggable/>
                 ))}

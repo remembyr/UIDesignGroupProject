@@ -5,7 +5,6 @@ import { Button } from "flowbite-react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDrag } from 'react-dnd';
 import MacroPlate from "./Plate/MacroPlate";
-import { PieChart } from '@mui/x-charts/PieChart';
 
 import React, { useState, useEffect } from 'react';
 import FoodList from "./FoodList";
@@ -198,7 +197,7 @@ export default function Quiz() {
     }
 
     return (
-        <div className="container mt-9" draggable={false}>
+        <div className="container mt-12 min-h-screen" draggable={false}>
             <QuizModal />
             <div className="row" draggable={false}>
                 <div className="col-md-6 left-column" draggable={false}>
@@ -230,13 +229,13 @@ export default function Quiz() {
                 </div>
 
                 <div className="col-md-6 right-column">
-                    <p className="select-none font-semibold text-xl mt-3">Meals:</p>
+                    <p className="select-none font-semibold text-2xl mt-3 mb-4">Drag foods to the plate to balance the meal!</p>
 
                     {/* loaded food list */}
                     <FoodList isLoading={isLoading} foods={foods}/>
 
                     {/* submit button */}
-                    <Button color={"blue"} onClick={handleSubmission} className="font-normal my-[1.875rem] mb-[10rem]" id="submit-button" outline>Submit</Button>
+                    <Button style={{ backgroundColor: "#008901" }} onClick={handleSubmission} className="mt-4" id="submit-button">Submit</Button>
                 </div>
 
             </div>
