@@ -65,7 +65,70 @@ fatsQuality = [
     {"name": 'French Fries', "imgURL": 'https://kentrollins.com/wp-content/uploads/2021/12/featured-fries-scaled.jpeg'},
     {"name": 'Almonds',
      "imgURL": 'https://images.immediate.co.uk/production/volatile/sites/30/2021/02/almonds-9e25ce7.jpg?quality=90&resize=556,505'},
+]
 
+quizFoods1 = [
+    {"name": 'Guacamole',
+     "imgURL": 'https://cdn.loveandlemons.com/wp-content/uploads/2023/07/guacamole-recipe.jpg',
+     "protein": 1,
+     "carbs": 3,
+     "fats": 4},
+    {"name": 'Cheese Pizza', "imgURL": 'https://hips.hearstapps.com/hmg-prod/images/classic-cheese-pizza-recipe-2-64429a0cb408b.jpg?crop=0.8888888888888888xw:1xh;center,top&resize=1200:*',
+     "protein": 12,
+     "carbs": 29,
+     "fats": 11
+     },
+    {"name": 'Fac House Salmon', "imgURL": 'https://www.onceuponachef.com/images/2018/02/pan-seared-salmon-.jpg',
+     "protein": 20,
+     "carbs": 0,
+     "fats": 7
+     },
+    {"name": 'French Fries', "imgURL": 'https://kentrollins.com/wp-content/uploads/2021/12/featured-fries-scaled.jpeg',
+     "protein": 2,
+     "carbs": 15,
+     "fats": 10
+     },
+    {"name": 'Almonds',
+     "imgURL": 'https://images.immediate.co.uk/production/volatile/sites/30/2021/02/almonds-9e25ce7.jpg?quality=90&resize=556,505',
+     "protein": 6,
+     "carbs": 6,
+     "fats": 14
+     },
+    {"name": 'Red Lentil Dahl', "imgURL": 'https://www.thespruceeats.com/thmb/2-Xm87x5rnIk0qgrp3fs6T7ILws=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/spicy-lentil-dahl-recipe-1001539-Hero_02-3f77c029c899411dac6da158c609e957.jpg',
+     "protein": 14,
+     "carbs": 44,
+     "fats": 8
+     },
+    {"name": 'Steak', "imgURL": 'https://www.allrecipes.com/thmb/3cixVDmAtbb2hYxoFLVJ4VPQ7rA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/143809-best-steak-marinade-in-existence-ARMag-1x1-1-8105b6b8e5cb4931ba8061f0425243dd.jpg',
+     "protein": 26,
+     "carbs": 0,
+     "fats": 8
+     },
+    {"name": 'Whole Wheat Pasta', "imgURL": 'https://hips.hearstapps.com/hmg-prod/images/whole-wheat-pasta-gettyimages-488392474-64359d6e6fa92.jpg',
+     "protein": 8,
+     "carbs": 39,
+     "fats": 1
+     },
+    {"name": 'Chickpeas', "imgURL": 'https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/04/chickpeas_closeup_1296x728_header-1024x575.jpg?w=1155&h=1528',
+     "protein": 9,
+     "carbs": 27,
+     "fats": 3
+     },
+    {"name": 'Cous Cous', "imgURL": 'https://emilybites.com/wp-content/uploads/2022/07/Mediterranean-Couscous-Salad-5b-500x375.jpg',
+     "protein": 6,
+     "carbs": 30,
+     "fats": 0
+     },
+    {"name": 'Apples', "imgURL": 'https://www.foodandwine.com/thmb/h7XBIk5uparmVpDEyQ9oC7brCpA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/A-Feast-of-Apples-FT-2-MAG1123-980271d42b1a489bab239b1466588ca4.jpg',
+     "protein": 1,
+     "carbs": 25,
+     "fats": 0
+     },
+    {"name": 'Fruity Pebbles', "imgURL": 'https://m.media-amazon.com/images/I/81O4DMIkqIL.jpg',
+     "protein": 1,
+     "carbs": 23,
+     "fats": 4
+     },
 ]
 
 def checkNumAway(correctAnswer, userAnswer, isCorrect):
@@ -196,6 +259,10 @@ def check_fats_quality():
     num_away = checkNumAway(correctAnswer, userAnswer, isCorrect)
 
     return jsonify(isCorrect=isCorrect, numAway=num_away)
+
+@app.route("/get_quiz1", methods=['GET', 'POST'])
+def get_quiz1():
+    return jsonify(quizFoods1)
 
 if __name__ == "__main__":
     app.run(debug=True)
