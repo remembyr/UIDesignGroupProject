@@ -103,7 +103,6 @@ export default function Quiz() {
 
       plateTotal = plateTotal + protein + carbs + fats;
       console.log(plateTotal);
-      console.log("hello" + plateProtein / plateTotal);
       plateProtein = plateProtein + protein;
       plateCarbs = plateCarbs + carbs;
       plateFats = plateFats + fats;
@@ -195,6 +194,12 @@ export default function Quiz() {
     setUserChoices50Section(updatedUserChoices50Section);
     setFoods([...foods, removedFood]);
 
+    plateTotal =
+      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
+    plateProtein = plateProtein - removedFood.protein;
+    plateCarbs = plateCarbs - removedFood.carbs;
+    plateFats = plateFats - removedFood.fats;
+
     currentPlate["50%"] = [];
 
     // console.log(foods)
@@ -212,6 +217,12 @@ export default function Quiz() {
     setUserChoices25TopSection(updatedUserChoices25TopSection);
     setFoods([...foods, removedFood]);
 
+    plateTotal =
+      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
+    plateProtein = plateProtein - removedFood.protein;
+    plateCarbs = plateCarbs - removedFood.carbs;
+    plateFats = plateFats - removedFood.fats;
+
     currentPlate["25% top"] = [];
     // console.log(currentPlate)
   };
@@ -227,6 +238,12 @@ export default function Quiz() {
     );
     setUserChoices25BottomSection(updatedUserChoices25BottomSection);
     setFoods([...foods, removedFood]);
+
+    plateTotal =
+      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
+    plateProtein = plateProtein - removedFood.protein;
+    plateCarbs = plateCarbs - removedFood.carbs;
+    plateFats = plateFats - removedFood.fats;
 
     currentPlate["25% bottom"] = [];
     // console.log(currentPlate)
