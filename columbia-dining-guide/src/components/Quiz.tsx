@@ -18,6 +18,9 @@ import { captureRejectionSymbol } from "events";
 interface Food {
   name: string;
   imgURL: string;
+  protein: number;
+  carbs: number;
+  fats: number;
 }
 
 // store dishes here
@@ -26,6 +29,11 @@ let currentPlate: { [key: string]: any } = {
   "25% top": [],
   "25% bottom": [],
 };
+
+let plateTotal = 0;
+let plateProtein = 0;
+let plateCarbs = 0;
+let plateFats = 0;
 
 export default function Quiz() {
   const navigate = useNavigate();
@@ -48,6 +56,7 @@ export default function Quiz() {
       const data = await res.json();
 
       setFoods(data);
+      console.log(data);
       setIsLoading(false);
     }
 
@@ -60,7 +69,8 @@ export default function Quiz() {
 
   const handleDrop50 = (event: React.DragEvent<HTMLDivElement>) => {
     const dataString = event.dataTransfer.getData("application/json");
-    const { name, imgURL } = JSON.parse(dataString);
+    const { name, imgURL, protein, carbs, fats } = JSON.parse(dataString);
+    console.log(protein);
 
     /**
      * User can place dish on section on plate iff there isn't already a dish there
@@ -73,18 +83,38 @@ export default function Quiz() {
 
       const updatedUserChoices50Section = [
         ...userChoices50Section,
-        { name: name, imgURL: imgURL },
+        {
+          name: name,
+          imgURL: imgURL,
+          protein: protein,
+          carbs: carbs,
+          fats: fats,
+        },
       ];
       setUserChoices50Section(updatedUserChoices50Section);
 
-      currentPlate["50%"].push({ name: name, imgURL: imgURL });
+      currentPlate["50%"].push({
+        name: name,
+        imgURL: imgURL,
+        protein: protein,
+        carbs: carbs,
+        fats: fats,
+      });
+
+      plateTotal = plateTotal + protein + carbs + fats;
+      console.log(plateTotal);
+      console.log("hello" + plateProtein / plateTotal);
+      plateProtein = plateProtein + protein;
+      plateCarbs = plateCarbs + carbs;
+      plateFats = plateFats + fats;
+
       console.log(currentPlate);
     }
   };
 
   const handleDrop25Top = (event: React.DragEvent<HTMLDivElement>) => {
     const dataString = event.dataTransfer.getData("application/json");
-    const { name, imgURL } = JSON.parse(dataString);
+    const { name, imgURL, protein, carbs, fats } = JSON.parse(dataString);
 
     if (currentPlate["25% top"].length === 0) {
       const updatedFoods = foods.filter((food) => {
@@ -94,9 +124,20 @@ export default function Quiz() {
 
       const updatedUserChoices25TopSection = [
         ...userChoices25TopSection,
-        { name: name, imgURL: imgURL },
+        {
+          name: name,
+          imgURL: imgURL,
+          protein: protein,
+          carbs: carbs,
+          fats: fats,
+        },
       ];
       setUserChoices25TopSection(updatedUserChoices25TopSection);
+
+      plateTotal = plateTotal + protein + carbs + fats;
+      plateProtein = plateProtein + protein;
+      plateCarbs = plateCarbs + carbs;
+      plateFats = plateFats + fats;
 
       currentPlate["25% top"].push({ name: name, imgURL: imgURL });
       console.log(currentPlate);
@@ -105,7 +146,7 @@ export default function Quiz() {
 
   const handleDrop25Bottom = (event: React.DragEvent<HTMLDivElement>) => {
     const dataString = event.dataTransfer.getData("application/json");
-    const { name, imgURL } = JSON.parse(dataString);
+    const { name, imgURL, protein, carbs, fats } = JSON.parse(dataString);
 
     if (currentPlate["25% bottom"].length === 0) {
       const updatedFoods = foods.filter((food) => {
@@ -115,10 +156,28 @@ export default function Quiz() {
 
       const updatedUserChoices25BottomSection = [
         ...userChoices25BottomSection,
-        { name: name, imgURL: imgURL },
+        {
+          name: name,
+          imgURL: imgURL,
+          protein: protein,
+          carbs: carbs,
+          fats: fats,
+        },
       ];
+
+      plateTotal = plateTotal + protein + carbs + fats;
+      plateProtein = plateProtein + protein;
+      plateCarbs = plateCarbs + carbs;
+      plateFats = plateFats + fats;
+
       setUserChoices25BottomSection(updatedUserChoices25BottomSection);
-      currentPlate["25% bottom"].push({ name: name, imgURL: imgURL });
+      currentPlate["25% bottom"].push({
+        name: name,
+        imgURL: imgURL,
+        protein: protein,
+        carbs: carbs,
+        fats: fats,
+      });
       console.log(currentPlate);
     }
   };
@@ -137,6 +196,7 @@ export default function Quiz() {
     setFoods([...foods, removedFood]);
 
     currentPlate["50%"] = [];
+
     // console.log(foods)
   };
 
@@ -176,10 +236,26 @@ export default function Quiz() {
     // post meal submission to database
     const allMeals = [].concat(...Object.values(currentPlate));
     console.log(allMeals);
+    console.log(
+      "carbs: " +
+        plateCarbs +
+        ", proteins: " +
+        plateProtein +
+        ", fats: " +
+        plateFats,
+    );
 
     // handle dish-tribution calculation logic here:
 
-    if (allMeals.length == 3) {
+    if (
+      allMeals.length == 3 &&
+      0.4 <= plateCarbs / plateTotal &&
+      0.6 >= plateCarbs / plateTotal &&
+      0.2 <= plateProtein / plateTotal &&
+      0.4 >= plateProtein / plateTotal &&
+      0.1 <= plateFats / plateTotal &&
+      0.3 >= plateFats / plateTotal
+    ) {
       navigate("../quiz/results"); // move to results page
     }
   };

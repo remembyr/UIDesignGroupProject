@@ -5,16 +5,22 @@ import ProteinImg from "../images/macros/protein.jpg";
 interface FoodEntryProps {
   name: string;
   imgURL: string;
+  protein?: number;
+  carbs?: number;
+  fats?: number;
   draggable?: boolean;
 }
 
 const FoodEntry: React.FC<FoodEntryProps> = ({
   name,
   imgURL,
+  protein,
+  carbs,
+  fats,
   draggable = true,
 }) => {
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    const data = JSON.stringify({ name, imgURL });
+    const data = JSON.stringify({ name, imgURL, protein, fats, carbs });
     event.dataTransfer.setData("application/json", data);
     event.dataTransfer.effectAllowed = "move";
   };
