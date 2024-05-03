@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
-import { Button, Card } from "flowbite-react";
+import { Button, Card, Spinner } from "flowbite-react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useDrag } from "react-dnd";
 import MacroPlate from "./Plate/MacroPlate";
@@ -60,56 +60,54 @@ export default function Quiz() {
       setIsLoading(false);
     }
 
-    setTimeout(() => {
-      getFoods();
-    }, 2000);
-  }, []);
-
-  /* dropping onto plate */
-
-  const handleDrop50 = (event: React.DragEvent<HTMLDivElement>) => {
-    const dataString = event.dataTransfer.getData("application/json");
-    const { name, imgURL, protein, carbs, fats } = JSON.parse(dataString);
-    console.log(protein);
-
-    /**
-     * User can place dish on section on plate iff there isn't already a dish there
-     */
-    if (currentPlate["50%"].length === 0) {
-      const updatedFoods = foods.filter((food) => {
-        return food.name !== name;
+    async function getLockedFood() {
+      const req = await fetch("http://127.0.0.1:5000/get_locked_food", {
+      method: "POST",
+      body: JSON.stringify({ quizStage: quizStage }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
       });
-      setFoods(updatedFoods);
+      const data = await req.json();
+
+      console.log(data.lockedFood.name);
+
+      currentPlate["50%"].push({
+        name: data.lockedFood.name,
+        imgURL: data.lockedFood.imgURL,
+        protein: data.lockedFood.protein,
+        carbs: data.lockedFood.carbs,
+        fats: data.lockedFood.fats,
+      });
 
       const updatedUserChoices50Section = [
         ...userChoices50Section,
         {
-          name: name,
-          imgURL: imgURL,
-          protein: protein,
-          carbs: carbs,
-          fats: fats,
+          name: data.lockedFood.name,
+          imgURL: data.lockedFood.imgURL,
+          protein: data.lockedFood.protein,
+          carbs: data.lockedFood.carbs,
+          fats: data.lockedFood.fats,
         },
       ];
       setUserChoices50Section(updatedUserChoices50Section);
 
-      currentPlate["50%"].push({
-        name: name,
-        imgURL: imgURL,
-        protein: protein,
-        carbs: carbs,
-        fats: fats,
-      });
-
-      setPlateTotal(plateTotal + protein + carbs + fats);
+      setPlateTotal(plateTotal + data.lockedFood.protein + data.lockedFood.carbs + data.lockedFood.fats);
       console.log(plateTotal);
-      setPlateProtein(plateProtein + protein);
-      setPlateCarbs(plateCarbs + carbs);
-      setPlateFats(plateFats + fats);
-
-      console.log(currentPlate);
+      setPlateProtein(plateProtein + data.lockedFood.protein);
+      setPlateCarbs(plateCarbs + data.lockedFood.carbs);
+      setPlateFats(plateFats + data.lockedFood.fats);
+      setIsLoading(false);
     }
-  };
+
+    setTimeout(() => {
+      getFoods();
+      getLockedFood();
+    }, 2000);
+
+  }, [quizStage]);
+
+  /* dropping onto plate */
 
   const handleDrop25Top = (event: React.DragEvent<HTMLDivElement>) => {
     const dataString = event.dataTransfer.getData("application/json");
@@ -183,27 +181,6 @@ export default function Quiz() {
 
   /* removing from plate */
 
-  const removeFromPlate50 = (food: string) => {
-    const removedFood = userChoices50Section.find((item) => item.name === food);
-    if (!removedFood) return;
-
-    // updatedUserChoices50Section
-    const updatedUserChoices50Section = userChoices50Section.filter(
-      (item) => item.name !== food,
-    );
-    setUserChoices50Section(updatedUserChoices50Section);
-    setFoods([...foods, removedFood]);
-
-    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
-    setPlateProtein(plateProtein - removedFood.protein);
-    setPlateCarbs(plateCarbs - removedFood.carbs);
-    setPlateFats(plateFats - removedFood.fats);
-
-    currentPlate["50%"] = [];
-
-    // console.log(foods)
-  };
-
   const removeFromPlate25Top = (food: string) => {
     const removedFood = userChoices25TopSection.find(
       (item) => item.name === food,
@@ -262,7 +239,7 @@ export default function Quiz() {
     // handle dish-tribution calculation logic here:
 
     if (
-      allMeals.length == 3 &&
+      allMeals.length > 2 &&
       0.4 <= plateCarbs / plateTotal &&
       0.6 >= plateCarbs / plateTotal &&
       0.2 <= plateProtein / plateTotal &&
@@ -277,9 +254,13 @@ export default function Quiz() {
       setPlateProtein(0);
       setPlateCarbs(0);
       setPlateFats(0);
+      currentPlate = {
+        "50%": [],
+        "25% top": [],
+        "25% bottom": [],
+      };
       //send this information to database, need to make user score API
       if(quizStage == 3) {
-        
         navigate("../quiz/results");
       } else {
         setQuizStage(quizStage+1);
@@ -308,18 +289,17 @@ export default function Quiz() {
 
           {/* Plate: */}
 
-          <MacroPlate
-            onDrop50={handleDrop50}
+          {!isLoading ? <MacroPlate
             onDrop25Top={handleDrop25Top}
             onDrop25Bottom={handleDrop25Bottom}
             macro="Carb"
             food50={userChoices50Section}
             food25_1={userChoices25TopSection}
             food25_2={userChoices25BottomSection}
-            removeFromPlate50={removeFromPlate50}
             removeFromPlate25Top={removeFromPlate25Top}
             removeFromPlate25Bottom={removeFromPlate25Bottom}
-          />
+          /> :
+          <Spinner />}
         </div>
 
         <div className="col-md-6 right-column">
@@ -337,7 +317,7 @@ export default function Quiz() {
             className="mt-4"
             id="submit-button"
           >
-            {quizStage != 3 ? "Submit & Continue" : "Submit & Finish"}
+            {quizStage !== 3 ? "Submit & Continue" : "Submit & Finish"}
           </Button>
         </div>
       </div>

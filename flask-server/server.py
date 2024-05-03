@@ -131,6 +131,24 @@ quizFoods1 = [
      },
 ]
 
+lockedFoods = {
+    "1": {"name": 'Buffalo Chicken Wrap',
+     "imgURL": 'https://d9hyo6bif16lx.cloudfront.net/live/img/production/detail/menu/lunch-dinner_sandwiches_crispy-buffalo-chicken-wrap.jpg',
+     "protein": 20,
+     "carbs": 29,
+     "fats": 11},
+    "2": {"name": 'Lentil Curry', "imgURL": 'https://frommybowl.com/wp-content/uploads/2019/10/Creamy_Coconut_Red_Lentil_Curry_FromMyBowl_Vegan-6.jpg',
+     "protein": 9,
+     "carbs": 29,
+     "fats": 13
+     },
+    "3": {"name": 'Caesar Salad', "imgURL": 'https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg',
+     "protein": 5,
+     "carbs": 7,
+     "fats": 12
+     },
+}
+
 def checkNumAway(correctAnswer, userAnswer, isCorrect):
     if not isCorrect:
         correct_set = set(correctAnswer)
@@ -263,6 +281,15 @@ def check_fats_quality():
 @app.route("/get_quiz1", methods=['GET', 'POST'])
 def get_quiz1():
     return jsonify(quizFoods1)
+
+@app.route('/get_locked_food', methods=['GET', 'POST'])
+def get_locked_food():
+    req = request.get_json()
+    quizStage = req['quizStage']
+
+    lockedFood = lockedFoods[str(quizStage)]
+
+    return jsonify(lockedFood=lockedFood)
 
 if __name__ == "__main__":
     app.run(debug=True)
