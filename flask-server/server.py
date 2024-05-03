@@ -180,7 +180,6 @@ def update_user():
 	    "completedProtein": checkpoint['completedProtein'],
     	"completedCarbs": checkpoint['completedCarbs'],
         "completedFat": checkpoint['completedFat'],
-        "quizScore": checkpoint['quizScore'],
    }
    
    user = updated_user
