@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
-import { Button } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useDrag } from "react-dnd";
 import MacroPlate from "./Plate/MacroPlate";
@@ -30,16 +30,16 @@ let currentPlate: { [key: string]: any } = {
   "25% bottom": [],
 };
 
-let plateTotal = 0;
-let plateProtein = 0;
-let plateCarbs = 0;
-let plateFats = 0;
-
 export default function Quiz() {
   const navigate = useNavigate();
   const { isModalOpen, setModalOpen } = useModal();
   const [isLoading, setIsLoading] = useState(true);
   const [foods, setFoods] = useState<Food[]>([]);
+  const [quizStage, setQuizStage] = useState<number>(1);
+  const [plateTotal, setPlateTotal] = useState<number>(0);
+  const [plateProtein, setPlateProtein] = useState<number>(0);
+  const [plateCarbs, setPlateCarbs] = useState<number>(0);
+  const [plateFats, setPlateFats] = useState<number>(0);
 
   const [userChoices50Section, setUserChoices50Section] = useState<Food[]>([]);
   const [userChoices25TopSection, setUserChoices25TopSection] = useState<
@@ -101,11 +101,11 @@ export default function Quiz() {
         fats: fats,
       });
 
-      plateTotal = plateTotal + protein + carbs + fats;
+      setPlateTotal(plateTotal + protein + carbs + fats);
       console.log(plateTotal);
-      plateProtein = plateProtein + protein;
-      plateCarbs = plateCarbs + carbs;
-      plateFats = plateFats + fats;
+      setPlateProtein(plateProtein + protein);
+      setPlateCarbs(plateCarbs + carbs);
+      setPlateFats(plateFats + fats);
 
       console.log(currentPlate);
     }
@@ -133,10 +133,10 @@ export default function Quiz() {
       ];
       setUserChoices25TopSection(updatedUserChoices25TopSection);
 
-      plateTotal = plateTotal + protein + carbs + fats;
-      plateProtein = plateProtein + protein;
-      plateCarbs = plateCarbs + carbs;
-      plateFats = plateFats + fats;
+      setPlateTotal(plateTotal + protein + carbs + fats);
+      setPlateProtein(plateProtein + protein);
+      setPlateCarbs(plateCarbs + carbs);
+      setPlateFats(plateFats + fats);
 
       currentPlate["25% top"].push({ name: name, imgURL: imgURL });
       console.log(currentPlate);
@@ -164,10 +164,10 @@ export default function Quiz() {
         },
       ];
 
-      plateTotal = plateTotal + protein + carbs + fats;
-      plateProtein = plateProtein + protein;
-      plateCarbs = plateCarbs + carbs;
-      plateFats = plateFats + fats;
+      setPlateTotal(plateTotal + protein + carbs + fats);
+      setPlateProtein(plateProtein + protein);
+      setPlateCarbs(plateCarbs + carbs);
+      setPlateFats(plateFats + fats);
 
       setUserChoices25BottomSection(updatedUserChoices25BottomSection);
       currentPlate["25% bottom"].push({
@@ -194,11 +194,10 @@ export default function Quiz() {
     setUserChoices50Section(updatedUserChoices50Section);
     setFoods([...foods, removedFood]);
 
-    plateTotal =
-      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
-    plateProtein = plateProtein - removedFood.protein;
-    plateCarbs = plateCarbs - removedFood.carbs;
-    plateFats = plateFats - removedFood.fats;
+    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
+    setPlateProtein(plateProtein - removedFood.protein);
+    setPlateCarbs(plateCarbs - removedFood.carbs);
+    setPlateFats(plateFats - removedFood.fats);
 
     currentPlate["50%"] = [];
 
@@ -217,11 +216,10 @@ export default function Quiz() {
     setUserChoices25TopSection(updatedUserChoices25TopSection);
     setFoods([...foods, removedFood]);
 
-    plateTotal =
-      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
-    plateProtein = plateProtein - removedFood.protein;
-    plateCarbs = plateCarbs - removedFood.carbs;
-    plateFats = plateFats - removedFood.fats;
+    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
+    setPlateProtein(plateProtein - removedFood.protein);
+    setPlateCarbs(plateCarbs - removedFood.carbs);
+    setPlateFats(plateFats - removedFood.fats);
 
     currentPlate["25% top"] = [];
     // console.log(currentPlate)
@@ -239,11 +237,10 @@ export default function Quiz() {
     setUserChoices25BottomSection(updatedUserChoices25BottomSection);
     setFoods([...foods, removedFood]);
 
-    plateTotal =
-      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats;
-    plateProtein = plateProtein - removedFood.protein;
-    plateCarbs = plateCarbs - removedFood.carbs;
-    plateFats = plateFats - removedFood.fats;
+    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
+    setPlateProtein(plateProtein - removedFood.protein);
+    setPlateCarbs(plateCarbs - removedFood.carbs);
+    setPlateFats(plateFats - removedFood.fats);
 
     currentPlate["25% bottom"] = [];
     // console.log(currentPlate)
@@ -261,7 +258,7 @@ export default function Quiz() {
         ", fats: " +
         plateFats,
     );
-
+    
     // handle dish-tribution calculation logic here:
 
     if (
@@ -273,13 +270,34 @@ export default function Quiz() {
       0.1 <= plateFats / plateTotal &&
       0.3 >= plateFats / plateTotal
     ) {
-      navigate("../quiz/results"); // move to results page
+      setUserChoices25BottomSection([]);
+      setUserChoices25TopSection([]);
+      setUserChoices50Section([]);
+      setPlateTotal(0);
+      setPlateProtein(0);
+      setPlateCarbs(0);
+      setPlateFats(0);
+      //send this information to database, need to make user score API
+      if(quizStage == 3) {
+        
+        navigate("../quiz/results");
+      } else {
+        setQuizStage(quizStage+1);
+      }
     }
   };
 
   return (
     <div className="container mt-12 min-h-screen" draggable={false}>
       <QuizModal />
+      <div className="min-w-screen flex justify-between items-center font-medium text-xl mb-6 ">      
+        <span>
+          <span className="p-[10px] mr-4 bg-white border border-gray-200 rounded-lg shadow-sm">Protein: {plateProtein}g ({plateProtein/plateTotal ? Math.round((plateProtein/plateTotal)*100) : 0}%)</span>
+          <span className="p-[10px] mr-4 bg-white border border-gray-200 rounded-lg shadow-sm">Carbs: {plateCarbs}g ({plateCarbs/plateTotal ? Math.round((plateCarbs/plateTotal)*100) : 0}%)</span>
+          <span className="p-[10px] bg-white border border-gray-200 rounded-lg shadow-sm">Fat: {plateFats}g ({plateFats/plateTotal ? Math.round((plateFats/plateTotal)*100) : 0}%)</span>
+        </span>
+        <span className="p-[10px] bg-white border border-gray-200 rounded-lg shadow-sm">Meal {quizStage}/3</span>
+      </div>
       <div className="row" draggable={false}>
         <div className="col-md-6 left-column" draggable={false}>
           {/* <div draggable={false}>
@@ -319,7 +337,7 @@ export default function Quiz() {
             className="mt-4"
             id="submit-button"
           >
-            Submit
+            {quizStage != 3 ? "Submit & Continue" : "Submit & Finish"}
           </Button>
         </div>
       </div>
