@@ -107,6 +107,21 @@ export default function Quiz() {
 
   }, [quizStage]);
 
+  async function updateQuizScores() {
+    const sectionSolution = { quizStage: quizStage, food1: userChoices25TopSection[0].name, food2: userChoices25BottomSection[0].name, protein: plateProtein, carbs: plateCarbs, fat: plateFats}
+    console.log(sectionSolution)
+    const req = await fetch("http://127.0.0.1:5000/update_quiz_scores", {
+    method: "POST",
+    body: JSON.stringify(sectionSolution),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+    });
+    const data = await req.json();
+
+    console.log(data);
+  }
+
   /* dropping onto plate */
 
   const handleDrop25Top = (event: React.DragEvent<HTMLDivElement>) => {
@@ -239,7 +254,7 @@ export default function Quiz() {
     // handle dish-tribution calculation logic here:
 
     if (
-      allMeals.length > 2 &&
+      allMeals.length >= 3 &&
       0.4 <= plateCarbs / plateTotal &&
       0.6 >= plateCarbs / plateTotal &&
       0.2 <= plateProtein / plateTotal &&
@@ -247,6 +262,7 @@ export default function Quiz() {
       0.1 <= plateFats / plateTotal &&
       0.3 >= plateFats / plateTotal
     ) {
+      updateQuizScores();
       setUserChoices25BottomSection([]);
       setUserChoices25TopSection([]);
       setUserChoices50Section([]);
@@ -299,7 +315,9 @@ export default function Quiz() {
             removeFromPlate25Top={removeFromPlate25Top}
             removeFromPlate25Bottom={removeFromPlate25Bottom}
           /> :
-          <Spinner />}
+          <div className="w-10/12 h-100 flex justify-center items-center rounded-full bg-gray-200 shadow-sm">
+            <Spinner />
+          </div>}
         </div>
 
         <div className="col-md-6 right-column">

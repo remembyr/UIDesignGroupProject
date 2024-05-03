@@ -7,7 +7,12 @@ app = Flask(__name__)
 
 CORS(app)
 
-user = {"completedProtein": False, "completedCarbs": False, "completedFat": False, "quizScore":0}
+user = {"completedProtein": False, "completedCarbs": False, "completedFat": False}
+quizScores = {
+    "1":{"food1": "", "food2": "", "protein": 0, "carbs": 0, "fat": 0},
+    "2":{"food1": "", "food2": "", "protein": 0, "carbs": 0, "fat": 0},
+    "3":{"food1": "", "food2": "", "protein": 0, "carbs": 0, "fat": 0},
+    }
 
 foods = [
     {"name": 'Red Lentil Dahl', "imgURL": 'https://www.thespruceeats.com/thmb/2-Xm87x5rnIk0qgrp3fs6T7ILws=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/spicy-lentil-dahl-recipe-1001539-Hero_02-3f77c029c899411dac6da158c609e957.jpg'},
@@ -290,6 +295,23 @@ def get_locked_food():
     lockedFood = lockedFoods[str(quizStage)]
 
     return jsonify(lockedFood=lockedFood)
+
+@app.route('/update_quiz_scores', methods=['GET', 'POST'])
+def update_quiz_scores():
+    req = request.get_json()
+    quizStage = req['quizStage']
+
+    quizScores[str(quizStage)]["food1"] = req["food1"]
+    quizScores[str(quizStage)]["food2"] = req["food2"]
+    quizScores[str(quizStage)]["protein"] = req["protein"]
+    quizScores[str(quizStage)]["carbs"] = req["carbs"]
+    quizScores[str(quizStage)]["fat"] = req["fat"]
+
+    return jsonify(isSuccess=True)
+
+@app.route('/get_quiz_scores', methods=['GET', 'POST'])
+def get_quiz_scores():
+    return jsonify(quizScores)
 
 if __name__ == "__main__":
     app.run(debug=True)
