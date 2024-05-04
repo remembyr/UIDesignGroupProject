@@ -65,7 +65,12 @@ const FatsQualityModal = () => {
           <Button color="gray" onClick={() => navigate("/learn/fats-source")}>
             Back
           </Button>
-          <Button onClick={() => setModalOpen(true)}>Play Sorting Game</Button>
+          <Button
+            onClick={() => setModalOpen(true)}
+            style={{ backgroundColor: "#008901" }}
+          >
+            Play Sorting Game
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
