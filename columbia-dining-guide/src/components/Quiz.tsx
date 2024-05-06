@@ -15,6 +15,9 @@ import { useModal } from "../contexts/ModalContext";
 import { stringify } from "querystring";
 import { captureRejectionSymbol } from "events";
 
+import { HiInformationCircle } from "react-icons/hi";
+import { Alert } from "flowbite-react";
+
 interface Food {
   name: string;
   imgURL: string;
@@ -62,11 +65,11 @@ export default function Quiz() {
 
     async function getLockedFood() {
       const req = await fetch("http://127.0.0.1:5000/get_locked_food", {
-      method: "POST",
-      body: JSON.stringify({ quizStage: quizStage }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
+        method: "POST",
+        body: JSON.stringify({ quizStage: quizStage }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
       const data = await req.json();
 
@@ -92,7 +95,12 @@ export default function Quiz() {
       ];
       setUserChoices50Section(updatedUserChoices50Section);
 
-      setPlateTotal(plateTotal + data.lockedFood.protein + data.lockedFood.carbs + data.lockedFood.fats);
+      setPlateTotal(
+        plateTotal +
+          data.lockedFood.protein +
+          data.lockedFood.carbs +
+          data.lockedFood.fats,
+      );
       console.log(plateTotal);
       setPlateProtein(plateProtein + data.lockedFood.protein);
       setPlateCarbs(plateCarbs + data.lockedFood.carbs);
@@ -104,18 +112,24 @@ export default function Quiz() {
       getFoods();
       getLockedFood();
     }, 2000);
-
   }, [quizStage]);
 
   async function updateQuizScores() {
-    const sectionSolution = { quizStage: quizStage, food1: userChoices25TopSection[0].name, food2: userChoices25BottomSection[0].name, protein: plateProtein, carbs: plateCarbs, fat: plateFats}
-    console.log(sectionSolution)
+    const sectionSolution = {
+      quizStage: quizStage,
+      food1: userChoices25TopSection[0].name,
+      food2: userChoices25BottomSection[0].name,
+      protein: plateProtein,
+      carbs: plateCarbs,
+      fat: plateFats,
+    };
+    console.log(sectionSolution);
     const req = await fetch("http://127.0.0.1:5000/update_quiz_scores", {
-    method: "POST",
-    body: JSON.stringify(sectionSolution),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
+      method: "POST",
+      body: JSON.stringify(sectionSolution),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     });
     const data = await req.json();
 
@@ -208,7 +222,9 @@ export default function Quiz() {
     setUserChoices25TopSection(updatedUserChoices25TopSection);
     setFoods([...foods, removedFood]);
 
-    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
+    setPlateTotal(
+      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats,
+    );
     setPlateProtein(plateProtein - removedFood.protein);
     setPlateCarbs(plateCarbs - removedFood.carbs);
     setPlateFats(plateFats - removedFood.fats);
@@ -229,7 +245,9 @@ export default function Quiz() {
     setUserChoices25BottomSection(updatedUserChoices25BottomSection);
     setFoods([...foods, removedFood]);
 
-    setPlateTotal(plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats);
+    setPlateTotal(
+      plateTotal - removedFood.protein - removedFood.carbs - removedFood.fats,
+    );
     setPlateProtein(plateProtein - removedFood.protein);
     setPlateCarbs(plateCarbs - removedFood.carbs);
     setPlateFats(plateFats - removedFood.fats);
@@ -238,6 +256,7 @@ export default function Quiz() {
     // console.log(currentPlate)
   };
 
+  const [answerCorrect, setAnswerCorrect] = useState<boolean>(true);
   const handleSubmission = () => {
     // post meal submission to database
     const allMeals = [].concat(...Object.values(currentPlate));
@@ -250,7 +269,7 @@ export default function Quiz() {
         ", fats: " +
         plateFats,
     );
-    
+
     // handle dish-tribution calculation logic here:
 
     if (
@@ -276,24 +295,47 @@ export default function Quiz() {
         "25% bottom": [],
       };
       //send this information to database, need to make user score API
-      if(quizStage == 3) {
+      if (quizStage == 3) {
         navigate("../quiz/results");
       } else {
-        setQuizStage(quizStage+1);
+        setQuizStage(quizStage + 1);
       }
+      setAnswerCorrect(true);
+    } else {
+      setAnswerCorrect(false); // Set answer correctness to false if conditions are not met
     }
   };
 
   return (
     <div className="container mt-12 min-h-screen" draggable={false}>
       <QuizModal />
-      <div className="min-w-screen flex justify-between items-center font-medium text-xl mb-6 ">      
+      <div className="min-w-screen mb-6 flex items-center justify-between text-xl font-medium ">
         <span>
-          <span className="p-[10px] mr-4 bg-white border border-gray-200 rounded-lg shadow-sm">Protein: {plateProtein}g ({plateProtein/plateTotal ? Math.round((plateProtein/plateTotal)*100) : 0}%)</span>
-          <span className="p-[10px] mr-4 bg-white border border-gray-200 rounded-lg shadow-sm">Carbs: {plateCarbs}g ({plateCarbs/plateTotal ? Math.round((plateCarbs/plateTotal)*100) : 0}%)</span>
-          <span className="p-[10px] bg-white border border-gray-200 rounded-lg shadow-sm">Fat: {plateFats}g ({plateFats/plateTotal ? Math.round((plateFats/plateTotal)*100) : 0}%)</span>
+          <span className="mr-4 rounded-lg border border-gray-200 bg-white p-[10px] shadow-sm">
+            Protein: {plateProtein}g (
+            {plateProtein / plateTotal
+              ? Math.round((plateProtein / plateTotal) * 100)
+              : 0}
+            %)
+          </span>
+          <span className="mr-4 rounded-lg border border-gray-200 bg-white p-[10px] shadow-sm">
+            Carbs: {plateCarbs}g (
+            {plateCarbs / plateTotal
+              ? Math.round((plateCarbs / plateTotal) * 100)
+              : 0}
+            %)
+          </span>
+          <span className="rounded-lg border border-gray-200 bg-white p-[10px] shadow-sm">
+            Fat: {plateFats}g (
+            {plateFats / plateTotal
+              ? Math.round((plateFats / plateTotal) * 100)
+              : 0}
+            %)
+          </span>
         </span>
-        <span className="p-[10px] bg-white border border-gray-200 rounded-lg shadow-sm">Meal {quizStage}/3</span>
+        <span className="rounded-lg border border-gray-200 bg-white p-[10px] shadow-sm">
+          Meal {quizStage}/3
+        </span>
       </div>
       <div className="row" draggable={false}>
         <div className="col-md-6 left-column" draggable={false}>
@@ -305,19 +347,22 @@ export default function Quiz() {
 
           {/* Plate: */}
 
-          {!isLoading ? <MacroPlate
-            onDrop25Top={handleDrop25Top}
-            onDrop25Bottom={handleDrop25Bottom}
-            macro="Carb"
-            food50={userChoices50Section}
-            food25_1={userChoices25TopSection}
-            food25_2={userChoices25BottomSection}
-            removeFromPlate25Top={removeFromPlate25Top}
-            removeFromPlate25Bottom={removeFromPlate25Bottom}
-          /> :
-          <div className="w-10/12 h-100 flex justify-center items-center rounded-full bg-gray-200 shadow-sm">
-            <Spinner />
-          </div>}
+          {!isLoading ? (
+            <MacroPlate
+              onDrop25Top={handleDrop25Top}
+              onDrop25Bottom={handleDrop25Bottom}
+              macro="Carb"
+              food50={userChoices50Section}
+              food25_1={userChoices25TopSection}
+              food25_2={userChoices25BottomSection}
+              removeFromPlate25Top={removeFromPlate25Top}
+              removeFromPlate25Bottom={removeFromPlate25Bottom}
+            />
+          ) : (
+            <div className="h-100 flex w-10/12 items-center justify-center rounded-full bg-gray-200 shadow-sm">
+              <Spinner />
+            </div>
+          )}
         </div>
 
         <div className="col-md-6 right-column">
@@ -328,6 +373,12 @@ export default function Quiz() {
           {/* loaded food list */}
           <FoodList isLoading={isLoading} foods={foods} />
 
+          {!answerCorrect && (
+            <Alert color="failure" icon={HiInformationCircle}>
+              <span className="font-medium">Your answer is incorrect!</span>{" "}
+              Please adjust your selections before continuing.
+            </Alert>
+          )}
           {/* submit button */}
           <Button
             style={{ backgroundColor: "#008901" }}
