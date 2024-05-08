@@ -3,7 +3,7 @@
 # Installation
 
 - Clone repo
-- Navigate to the `columbia-dining-hall` directory
+- Navigate to the `columbia-dining-guide` directory
 - Run `npm install`
 - Navigate to the `flask-server` directory
 - On Windows: Run `.\venv\Scripts\activate`
